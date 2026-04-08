@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atividade para conhecimento bíblico - Jogo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Container principal do jogo -->
+    <div class="container-jogo">
+        <!-- Cabeçalho do jogo -->
+        <header class="header-jogo">
+            <h1 class="titulo-jogo">Atividade para conhecimento bíblico</h1>
+            
+            <!-- Placar -->
+            <div class="placar">
+                <div class="placar-item">
+                    <div class="placar-label">Acertos</div>
+                    <div class="placar-valor acertos" id="acertos">0</div>
+                </div>
+                <div class="placar-item">
+                    <div class="placar-label">Erros</div>
+                    <div class="placar-valor erros" id="erros">0</div>
+                </div>
+                <div class="placar-item">
+                    <div class="placar-label">Oportunidades</div>
+                    <div class="placar-valor oportunidades" id="oportunidades">14</div>
+                </div>
+                <div class="placar-item">
+                    <div class="placar-label">Peças reveladas</div>
+                    <div class="placar-valor pecas" id="pecas-reveladas">0/10</div>
+                </div>
+            </div>
+            
+            <!-- Texto motivacional -->
+            <p class="texto-motivacional" id="texto-motivacional">
+                Vamos aprender sobre a Bíblia e montar uma imagem linda!
+            </p>
+        </header>
+
+        <!-- Área principal do jogo -->
+        <main class="area-jogo">
+            <!-- Área do quebra-cabeça -->
+            <section class="area-puzzle">
+                <h2 class="titulo-puzzle">Monte o Quebra-cabeça!</h2>
+                <div class="puzzle-container" id="puzzle-container">
+                    <!-- As 10 peças do quebra-cabeça serão geradas aqui -->
+                </div>
+            </section>
+
+            <!-- Área da pergunta -->
+            <section class="area-pergunta">
+                <h2 class="titulo-pergunta">Pergunta Bíblica</h2>
+                <div class="pergunta-texto" id="pergunta-texto">
+                    Carregando pergunta...
+                </div>
+                <div class="alternativas" id="alternativas">
+                    <!-- As 4 alternativas serão geradas aqui -->
+                </div>
+            </section>
+        </main>
+
+        <!-- Área de feedback -->
+        <section class="area-feedback">
+            <div class="feedback-mensagem" id="feedback-mensagem">
+                <!-- Mensagem de feedback aparece aqui -->
+            </div>
+        </section>
+
+        <!-- Botão de próxima pergunta -->
+        <button class="btn-proxima" id="btn-proxima" disabled onclick="proximaPergunta()">
+            PERGUNTA SEGUINTE
+        </button>
+    </div>
+
+    <!-- Modal de resultado -->
+    <div class="modal" id="modal-resultado">
+        <div class="modal-conteudo">
+            <h2 class="modal-titulo" id="modal-titulo">
+                <!-- Título do resultado -->
+            </h2>
+            <p class="modal-mensagem" id="modal-mensagem">
+                <!-- Mensagem do resultado -->
+            </p>
+            
+            <!-- Imagem completa -->
+            <img class="modal-imagem" id="modal-imagem" alt="Imagem completa">
+            
+            <!-- Estatísticas -->
+            <div class="modal-estatisticas">
+                <div class="estatistica-item">
+                    <span class="estatistica-label">Total de Acertos:</span>
+                    <span class="estatistica-valor" id="estatistica-acertos">0</span>
+                </div>
+                <div class="estatistica-item">
+                    <span class="estatistica-label">Total de Erros:</span>
+                    <span class="estatistica-valor" id="estatistica-erros">0</span>
+                </div>
+                <div class="estatistica-item">
+                    <span class="estatistica-label">Peças Reveladas:</span>
+                    <span class="estatistica-valor" id="estatistica-pecas">0/10</span>
+                </div>
+                <div class="estatistica-item">
+                    <span class="estatistica-label">Oportunidades Usadas:</span>
+                    <span class="estatistica-valor" id="estatistica-oportunidades">0</span>
+                </div>
+            </div>
+            
+            <!-- Botão para jogar novamente -->
+            <button class="btn-jogar-novamente" id="btn-jogar-novamente" onclick="jogarNovamente()">
+                Jogar Novamente
+            </button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+</html>
