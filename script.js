@@ -74,10 +74,7 @@ const perguntasBiblicas = [
     },
     {
         pergunta: "Qual sinal Deus deu após o dilúvio?",
-        alternativas: "Estrela",
-        "Arco-íris",
-        "Trovão",
-        "Fogo",
+        alternativas: ["Estrela", "Arco-íris", "Trovão", "Fogo"],
         correta: "Arco-íris"
     },
     
