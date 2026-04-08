@@ -329,11 +329,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Função principal de inicialização
 function inicializarJogo() {
+    console.log('Inicializando jogo...');
+    
     // Embaralha as perguntas
     estadoJogo.perguntasEmbaralhadas = embaralharArray([...perguntasBiblicas]);
+    console.log('Perguntas embaralhadas:', estadoJogo.perguntasEmbaralhadas.length);
     
     // Escolhe uma imagem aleatória
     estadoJogo.imagemAtual = escolherImagemAleatoria();
+    console.log('Imagem escolhida:', estadoJogo.imagemAtual);
     
     // Cria o quebra-cabeça
     criarPuzzle();
@@ -346,6 +350,8 @@ function inicializarJogo() {
     
     // Carrega estatísticas salvas
     carregarEstatisticas();
+    
+    console.log('Jogo inicializado com sucesso!');
 }
 
 // ============================================
@@ -407,16 +413,27 @@ function revelarPeca(indice) {
 
 // Carrega uma pergunta
 function carregarPergunta() {
+    console.log('Carregando pergunta...');
+    console.log('Estado atual:', estadoJogo);
+    
     if (estadoJogo.perguntaAtual >= estadoJogo.perguntasEmbaralhadas.length) {
         // Se acabaram as perguntas, embaralha novamente
         estadoJogo.perguntasEmbaralhadas = embaralharArray([...perguntasBiblicas]);
         estadoJogo.perguntaAtual = 0;
+        console.log('Perguntas reembaralhadas');
     }
     
     const pergunta = estadoJogo.perguntasEmbaralhadas[estadoJogo.perguntaAtual];
+    console.log('Pergunta selecionada:', pergunta);
     
     // Atualiza o texto da pergunta
-    document.getElementById('pergunta-texto').textContent = pergunta.pergunta;
+    const elementoPergunta = document.getElementById('pergunta-texto');
+    if (elementoPergunta) {
+        elementoPergunta.textContent = pergunta.pergunta;
+        console.log('Texto da pergunta atualizado:', pergunta.pergunta);
+    } else {
+        console.error('Elemento pergunta-texto não encontrado!');
+    }
     
     // Cria as alternativas
     criarAlternativas(pergunta);
