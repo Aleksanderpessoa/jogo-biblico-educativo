@@ -688,6 +688,8 @@ body {
     font-weight: 500;
     position: relative;
     overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
 }
 
 .btn-alternativa:hover:not(:disabled) {
