@@ -448,7 +448,7 @@
                 
                 piece.style.backgroundImage = `url('${estadoJogo.imagemAtual}')`;
                 piece.style.backgroundSize = `${CONFIG.PUZZLE_COLUNAS * 100}% ${CONFIG.PUZZLE_LINHAS * 100}%`;
-                piece.style.backgroundPosition = `${coluna * (100 / (CONFIG.PUZZLE_COLUNAS - 1))}% ${linha * (100 / (CONFIG.PUZZLE_LINHAS - 1))}%`;
+                piece.style.backgroundPosition = `${(coluna * 100) / (CONFIG.PUZZLE_COLUNAS - 1)}% ${(linha * 100) / (CONFIG.PUZZLE_LINHAS - 1)}%`;
                 
                 container.appendChild(piece);
             }
@@ -457,16 +457,28 @@
         }
 
         function revelarPeca(indice) {
+            console.log('Tentando revelar peça:', indice);
             const peca = document.getElementById(`peca-${indice}`);
-            if (peca && !peca.classList.contains('revelada')) {
-                peca.classList.add('revelada');
-                estadoJogo.pecasReveladas++;
-                console.log('Peça revelada:', indice, 'Total:', estadoJogo.pecasReveladas);
-                
-                // Verifica se ganhou
-                if (estadoJogo.pecasReveladas === CONFIG.NUMERO_PECAS) {
-                    setTimeout(() => finalizarJogo(true), 1000);
+            console.log('Elemento da peça:', peca);
+            
+            if (peca) {
+                console.log('Peça encontrada, classes atuais:', peca.className);
+                if (!peca.classList.contains('revelada')) {
+                    peca.classList.add('revelada');
+                    estadoJogo.pecasReveladas++;
+                    console.log('Peça revelada com sucesso! Índice:', indice, 'Total:', estadoJogo.pecasReveladas);
+                    console.log('Classes após revelar:', peca.className);
+                    
+                    // Verifica se ganhou
+                    if (estadoJogo.pecasReveladas === CONFIG.NUMERO_PECAS) {
+                        console.log('Todas as peças reveladas! Finalizando jogo...');
+                        setTimeout(() => finalizarJogo(true), 1000);
+                    }
+                } else {
+                    console.log('Peça já estava revelada');
                 }
+            } else {
+                console.error('Peça não encontrada com ID:', `peca-${indice}`);
             }
         }
 
