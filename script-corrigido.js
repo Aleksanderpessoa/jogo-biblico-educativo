@@ -536,16 +536,10 @@ function inicializarJogo() {
         // Embaralha as perguntas
         estadoJogo.perguntasEmbaralhadas = embaralharArray([...perguntasBiblicas]);
         
-        // Usa imagem padrão
-        estadoJogo.imagemAtual = IMAGEM_PADRAO;
-        
         // Inicializa versículos revelados
         estadoJogo.versiculosRevelados = [];
         
-        console.log('Imagem padrão selecionada');
-        
-        // Cria o quebra-cabeça
-        criarPuzzle();
+        console.log('Jogo inicializado sem quebra-cabeça');
         
         // Carrega a primeira pergunta
         carregarPergunta();
@@ -560,47 +554,8 @@ function inicializarJogo() {
 }
 
 // ============================================
-// FUNÇÕES DO QUEBRA-CABEÇA
+// FUNÇÕES DO SISTEMA DE MENSAGENS
 // ============================================
-
-function criarPuzzle() {
-    const container = document.getElementById('puzzle-container');
-    if (!container) return;
-    
-    container.innerHTML = '';
-    
-    for (let i = 0; i < CONFIG.NUMERO_PECAS; i++) {
-        const piece = document.createElement('div');
-        piece.className = 'puzzle-piece';
-        piece.id = `peca-${i}`;
-        
-        // Configura a imagem de fundo para cada peça
-        const linha = Math.floor(i / CONFIG.PUZZLE_COLUNAS);
-        const coluna = i % CONFIG.PUZZLE_COLUNAS;
-        
-        piece.style.backgroundImage = `url('${estadoJogo.imagemAtual}')`;
-        piece.style.backgroundSize = `${CONFIG.PUZZLE_COLUNAS * 100}% ${CONFIG.PUZZLE_LINHAS * 100}%`;
-        piece.style.backgroundPosition = `${coluna * (100 / (CONFIG.PUZZLE_COLUNAS - 1))}% ${linha * (100 / (CONFIG.PUZZLE_LINHAS - 1))}%`;
-        
-        container.appendChild(piece);
-    }
-}
-
-function revelarPeca(indice) {
-    const peca = document.getElementById(`peca-${indice}`);
-    if (peca && !peca.classList.contains('revelada')) {
-        peca.classList.add('revelada');
-        estadoJogo.pecasReveladas++;
-        
-        // Mostra versículo de benevolência
-        mostrarVersiculoBenevolencia();
-        
-        // Verifica se ganhou
-        if (estadoJogo.pecasReveladas === CONFIG.NUMERO_PECAS) {
-            setTimeout(() => finalizarJogo(true), 1000);
-        }
-    }
-}
 
 function mostrarMensagem(tipo, versiculo = null) {
     const mensagemContainer = document.getElementById('mensagem-container');
@@ -753,8 +708,8 @@ function verificarResposta(respostaSelecionada, respostaCorreta, botao) {
         botao.classList.add('correta');
         mostrarFeedback('ACERTOU!', 'acerto');
         
-        // Revela uma peça do quebra-cabeça
-        revelarPeca(estadoJogo.acertos - 1);
+        // Mostra mensagem de sucesso
+        mostrarVersiculoBenevolencia();
         
         // Atualiza texto motivacional
         atualizarTextoMotivacional(true);
