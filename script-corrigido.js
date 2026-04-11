@@ -602,10 +602,70 @@ function revelarPeca(indice) {
     }
 }
 
-function mostrarVersiculoBenevolencia() {
-    // Teste simples com alert
-    alert('Versículo sendo exibido! Acerto: ' + (estadoJogo.versiculosRevelados.length + 1));
+function mostrarFeedbackQuebraCabeca(tipo, versiculo = null) {
+    // Remove feedback anterior se existir
+    const feedbackAnterior = document.querySelector('.feedback-quebra-cabeca');
+    if (feedbackAnterior) {
+        feedbackAnterior.remove();
+    }
     
+    // Cria elemento de feedback
+    const feedback = document.createElement('div');
+    feedback.className = 'feedback-quebra-cabeca';
+    
+    if (tipo === 'acerto') {
+        feedback.innerHTML = `
+            <div class="feedback-acerto">
+                <h3>PARABÉNS! </h3>
+                <p>${versiculo.versiculo}</p>
+                <small>${versiculo.referencia}</small>
+            </div>
+        `;
+        feedback.classList.add('feedback-acerto-container');
+    } else {
+        const dicas = [
+            "Continue tentando! Deus te ajuda!",
+            "Não desista! A fé move montanhas!",
+            "Tente novamente! Com Deus tudo é possível!",
+            "Coragem! Você consegue!",
+            "Confie em Deus! Ele está com você!"
+        ];
+        const dicaAleatoria = dicas[Math.floor(Math.random() * dicas.length)];
+        
+        feedback.innerHTML = `
+            <div class="feedback-erro">
+                <h3>TENTE NOVAMENTE! </h3>
+                <p>${dicaAleatoria}</p>
+            </div>
+        `;
+        feedback.classList.add('feedback-erro-container');
+    }
+    
+    // Adiciona ao container do quebra-cabeça
+    const puzzleContainer = document.getElementById('puzzle-container');
+    if (puzzleContainer) {
+        puzzleContainer.appendChild(feedback);
+        
+        // Animação de entrada
+        setTimeout(() => {
+            feedback.style.opacity = '1';
+            feedback.style.transform = 'translateY(-10px)';
+        }, 10);
+        
+        // Auto-remove após 3 segundos
+        setTimeout(() => {
+            feedback.style.opacity = '0';
+            feedback.style.transform = 'translateY(0)';
+            setTimeout(() => {
+                if (feedback.parentNode) {
+                    feedback.remove();
+                }
+            }, 300);
+        }, 3000);
+    }
+}
+
+function mostrarVersiculoBenevolencia() {
     // Verifica se ainda há versículos para mostrar
     if (estadoJogo.versiculosRevelados.length >= versiculosBenevolencia.length) {
         return;
@@ -618,36 +678,8 @@ function mostrarVersiculoBenevolencia() {
         const versiculo = versiculosBenevolencia[proximoIndice];
         estadoJogo.versiculosRevelados.push(proximoIndice);
         
-        // Remove modal anterior se existir
-        const modalAnterior = document.querySelector('.modal-versiculo');
-        if (modalAnterior) {
-            modalAnterior.remove();
-        }
-        
-        // Cria modal para mostrar o versículo
-        const modalVersiculo = document.createElement('div');
-        modalVersiculo.className = 'modal-versiculo';
-        modalVersiculo.innerHTML = `
-            <div class="modal-versiculo-content">
-                <div class="versiculo-texto">
-                    <p class="versiculo-principal">"${versiculo.versiculo}"</p>
-                    <p class="versiculo-referencia">${versiculo.referencia}</p>
-                </div>
-                <button class="versiculo-fechar" onclick="fecharVersiculo()">Continuar</button>
-            </div>
-        `;
-        
-        document.body.appendChild(modalVersiculo);
-        
-        // Adiciona efeito de fade in
-        setTimeout(() => {
-            modalVersiculo.style.opacity = '1';
-        }, 10);
-        
-        // Auto-close após 5 segundos
-        setTimeout(() => {
-            fecharVersiculo();
-        }, 5000);
+        // Mostra feedback visual no quebra-cabeça
+        mostrarFeedbackQuebraCabeca('acerto', versiculo);
     }
 }
 
@@ -750,6 +782,9 @@ function verificarResposta(respostaSelecionada, respostaCorreta, botao) {
         estadoJogo.erros++;
         botao.classList.add('errada');
         mostrarFeedback('ERROU', 'erro');
+        
+        // Mostra feedback de erro no quebra-cabeça
+        mostrarFeedbackQuebraCabeca('erro');
         
         // Mostra a resposta correta
         botoes.forEach(btn => {
