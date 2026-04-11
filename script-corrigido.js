@@ -719,6 +719,8 @@ function criarAlternativas(pergunta) {
         botao.textContent = alternativa;
         botao.onclick = () => verificarResposta(alternativa, pergunta.correta, botao);
         
+        console.log('Botão criado:', alternativa, 'com onclick atribuído');
+        
         // Adiciona delay para animação de entrada
         setTimeout(() => {
             botao.style.opacity = '1';
