@@ -700,6 +700,8 @@ function criarAlternativas(pergunta) {
 }
 
 function verificarResposta(respostaSelecionada, respostaCorreta, botao) {
+    alert('verificarResposta chamada! Resposta: ' + respostaSelecionada);
+    
     if (estadoJogo.respondido || !estadoJogo.jogoAtivo) return;
     
     estadoJogo.respondido = true;
