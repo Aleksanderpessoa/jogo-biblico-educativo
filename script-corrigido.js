@@ -3,6 +3,7 @@
 // ============================================
 
 console.log('Script-corrigido.js carregado com sucesso!');
+console.log('=== VERSÃO COM VERSÍCULOS ATIVADA ===');
 
 // ============================================
 // CONFIGURAÇÕES DO JOGO
