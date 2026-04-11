@@ -256,7 +256,12 @@ const perguntasBiblicas = [
 // IMAGENS DO QUEBRA-CABEÇA
 // ============================================
 
-const IMAGEM_PADRAO = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cdefs%3E%3ClinearGradient id='sky' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2387CEEB'/%3E%3Cstop offset='100%25' style='stop-color:%23E0F6FF'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='300' fill='url(%23sky)'/%3E%3Ccircle cx='320' cy='60' r='30' fill='%23FFD700'/%3E%3Cpath d='M50 200 Q100 150 150 200 T250 200' stroke='%2332CD32' stroke-width='3' fill='none'/%3E%3Cpath d='M250 200 Q300 150 350 200' stroke='%2332CD32' stroke-width='3' fill='none'/%3E%3Ccircle cx='80' cy='180' r='25' fill='%23228B22'/%3E%3Ccircle cx='150' cy='170' r='30' fill='%23228B22'/%3E%3Ccircle cx='220' cy='175' r='28' fill='%23228B22'/%3E%3Ccircle cx='300' cy='180' r='32' fill='%23228B22'/%3E%3Cpath d='M100 250 Q200 200 300 250' stroke='%238B4513' stroke-width='2' fill='none'/%3E%3Cpath d='M150 260 Q200 230 250 260' stroke='%238B4513' stroke-width='2' fill='none'/%3E%3C/svg%3E";
+const IMAGENS_ANIMAIS = [
+    'img/animais/leao.jpg',
+    'img/animais/elefante.jpg'
+];
+
+let IMAGEM_ATUAL = '';
 
 // ============================================
 // VARIÁVEIS GLOBAIS DO JOGO
@@ -288,7 +293,11 @@ function inicializarJogo() {
         estadoJogo.perguntasEmbaralhadas = embaralharArray([...perguntasBiblicas]);
         
         // Escolhe uma imagem aleatória
-        estadoJogo.imagemAtual = IMAGEM_PADRAO;
+        const imagemAleatoria = IMAGENS_ANIMAIS[Math.floor(Math.random() * IMAGENS_ANIMAIS.length)];
+        IMAGEM_ATUAL = imagemAleatoria;
+        estadoJogo.imagemAtual = IMAGEM_ATUAL;
+        
+        console.log('Imagem selecionada:', IMAGEM_ATUAL);
         
         // Cria o quebra-cabeça
         criarPuzzle();
