@@ -89,82 +89,122 @@
 }
 
 /* ============================================
-   FEEDBACK VISUAL NO QUEBRA-CABEÇA
+   ÁREA DE MENSAGENS
    ============================================ */
 
-.feedback-quebra-cabeca {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 100;
-    opacity: 0;
-    transition: all 0.3s ease-in-out;
-    pointer-events: none;
+.area-mensagens {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border: 2px solid #dee2e6;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     text-align: center;
-    padding: 20px;
-    border-radius: 15px;
-    min-width: 300px;
-    max-width: 90%;
 }
 
-.feedback-acerto-container {
+.titulo-mensagens {
+    color: #495057;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.mensagem-container {
+    width: 100%;
+    max-width: 600px;
+    transition: all 0.3s ease-in-out;
+}
+
+.mensagem-inicial {
+    color: #6c757d;
+    font-size: 1.1rem;
+    font-style: italic;
+    opacity: 0.8;
+}
+
+.mensagem-sucesso {
     background: linear-gradient(135deg, #4CAF50, #45a049, #81C784);
+    color: white;
+    padding: 30px;
+    border-radius: 15px;
     box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
     border: 2px solid #2E7D32;
+    animation: sucessoPulso 0.6s ease-in-out infinite alternate;
 }
 
-.feedback-erro-container {
+.mensagem-sucesso h2 {
+    font-size: 2rem;
+    margin: 0 0 15px 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.mensagem-sucesso .parabens {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin: 0 0 20px 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.mensagem-sucesso .versiculo {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+
+.mensagem-sucesso .versiculo p {
+    font-size: 1.1rem;
+    margin: 0 0 8px 0;
+    font-style: italic;
+    line-height: 1.4;
+}
+
+.mensagem-sucesso .versiculo small {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.mensagem-erro {
     background: linear-gradient(135deg, #FF6B6B, #FF5252, #FF8A80);
+    color: white;
+    padding: 30px;
+    border-radius: 15px;
     box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
     border: 2px solid #D32F2F;
 }
 
-.feedback-acerto h3 {
-    color: white;
-    font-size: 1.8rem;
-    margin: 0 0 10px 0;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    animation: pulso 0.6s ease-in-out infinite alternate;
-}
-
-.feedback-erro h3 {
-    color: white;
-    font-size: 1.8rem;
-    margin: 0 0 10px 0;
+.mensagem-erro h2 {
+    font-size: 2rem;
+    margin: 0 0 15px 0;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.feedback-acerto p {
-    color: white;
-    font-size: 1.1rem;
-    margin: 0 0 8px 0;
-    font-weight: 500;
-    line-height: 1.4;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-}
-
-.feedback-erro p {
-    color: white;
+.mensagem-erro .dica {
     font-size: 1.2rem;
-    margin: 0;
+    margin: 0 0 15px 0;
     font-weight: 600;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 
-.feedback-acerto small {
-    color: #E8F5E8;
-    font-size: 0.9rem;
-    font-style: italic;
+.mensagem-erro .tente-novamente {
+    font-size: 1.1rem;
+    margin: 0;
     opacity: 0.9;
 }
 
-@keyframes pulso {
+@keyframes sucessoPulso {
     0% {
         transform: scale(1);
+        box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
     }
     100% {
-        transform: scale(1.05);
+        transform: scale(1.02);
+        box-shadow: 0 8px 30px rgba(76, 175, 80, 0.6);
     }
 }
 

@@ -602,13 +602,47 @@ function revelarPeca(indice) {
     }
 }
 
-function mostrarFeedbackQuebraCabeca(tipo, versiculo = null) {
-    // Teste simples com alert
+function mostrarMensagem(tipo, versiculo = null) {
+    const mensagemContainer = document.getElementById('mensagem-container');
+    if (!mensagemContainer) return;
+    
     if (tipo === 'acerto') {
-        alert('ACERTOU! Versículo: ' + versiculo.referencia);
+        mensagemContainer.innerHTML = `
+            <div class="mensagem-sucesso">
+                <h2>Ótimo! Você Acertou!</h2>
+                <p class="parabens">Parabéns!!!</p>
+                <div class="versiculo">
+                    <p>"${versiculo.versiculo}"</p>
+                    <small>${versiculo.referencia}</small>
+                </div>
+            </div>
+        `;
     } else {
-        alert('ERROU! Tente novamente!');
+        const dicas = [
+            "Continue tentando! Deus te ajuda!",
+            "Não desista! A fé move montanhas!",
+            "Tente novamente! Com Deus tudo é possível!",
+            "Coragem! Você consegue!",
+            "Confie em Deus! Ele está com você!"
+        ];
+        const dicaAleatoria = dicas[Math.floor(Math.random() * dicas.length)];
+        
+        mensagemContainer.innerHTML = `
+            <div class="mensagem-erro">
+                <h2>Que pena! Você errou...</h2>
+                <p class="dica">${dicaAleatoria}</p>
+                <p class="tente-novamente">Tente novamente na próxima pergunta!</p>
+            </div>
+        `;
     }
+    
+    // Adiciona animação de entrada
+    mensagemContainer.style.opacity = '0';
+    mensagemContainer.style.transform = 'scale(0.8)';
+    setTimeout(() => {
+        mensagemContainer.style.opacity = '1';
+        mensagemContainer.style.transform = 'scale(1)';
+    }, 10);
 }
 
 function mostrarVersiculoBenevolencia() {
@@ -624,8 +658,8 @@ function mostrarVersiculoBenevolencia() {
         const versiculo = versiculosBenevolencia[proximoIndice];
         estadoJogo.versiculosRevelados.push(proximoIndice);
         
-        // Mostra feedback visual no quebra-cabeça
-        mostrarFeedbackQuebraCabeca('acerto', versiculo);
+        // Mostra mensagem de sucesso
+        mostrarMensagem('acerto', versiculo);
     }
 }
 
@@ -731,8 +765,8 @@ function verificarResposta(respostaSelecionada, respostaCorreta, botao) {
         botao.classList.add('errada');
         mostrarFeedback('ERROU', 'erro');
         
-        // Mostra feedback de erro no quebra-cabeça
-        mostrarFeedbackQuebraCabeca('erro');
+        // Mostra mensagem de erro
+        mostrarMensagem('erro');
         
         // Mostra a resposta correta
         botoes.forEach(btn => {
