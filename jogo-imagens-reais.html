@@ -1,0 +1,1528 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atividade para conhecimento bíblico - Jogo com Imagens Reais</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* CSS GARANTIDO para o quebra-cabeça com imagens reais */
+        .puzzle-piece {
+            background: linear-gradient(135deg, #f0f0f0, #e0e0e0) !important;
+            border: 3px solid #ccc !important;
+            border-radius: 8px !important;
+            position: relative !important;
+            overflow: hidden !important;
+            transition: all 0.5s ease !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-size: 2rem !important;
+            font-weight: bold !important;
+            color: #999 !important;
+        }
+        
+        .puzzle-piece::before {
+            content: '?' !important;
+            position: absolute !important;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            font-size: 2.5rem !important;
+            color: #999 !important;
+            font-weight: bold !important;
+        }
+        
+        .puzzle-piece.revelada {
+            animation: revelar-peca 0.8s ease !important;
+            transform: scale(1.05) !important;
+            border-color: #4CAF50 !important;
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4) !important;
+            z-index: 10 !important;
+        }
+        
+        .puzzle-piece.revelada::before {
+            display: none !important;
+        }
+        
+        /* Garantir que o container funcione */
+        .puzzle-container {
+            display: grid !important;
+            grid-template-columns: repeat(5, 1fr) !important;
+            grid-template-rows: repeat(2, 1fr) !important;
+            gap: 5px !important;
+            width: 100% !important;
+            max-width: 400px !important;
+            height: 300px !important;
+            margin: 0 auto !important;
+            background: #f8f9fa !important;
+            border-radius: 15px !important;
+            padding: 10px !important;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+        }
+        
+        @keyframes revelar-peca {
+            0% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.2) rotate(5deg); }
+            100% { transform: scale(1.05) rotate(0deg); }
+        }
+        
+        /* Estilo para o modal de resultado */
+        .modal-imagem {
+            display: grid !important;
+            grid-template-columns: repeat(5, 1fr) !important;
+            grid-template-rows: repeat(2, 1fr) !important;
+            gap: 5px !important;
+            width: 300px !important;
+            height: 200px !important;
+            margin: 20px auto !important;
+            background: #f8f9fa !important;
+            border-radius: 15px !important;
+            padding: 10px !important;
+        }
+        
+        .modal-imagem .animal-piece {
+            border-radius: 8px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-size: 1.5rem !important;
+            font-weight: bold !important;
+            color: white !important;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3) !important;
+            border: 2px solid #4CAF50 !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Container principal do jogo -->
+    <div class="container-jogo">
+        <!-- Cabeçalho do jogo -->
+        <header class="header-jogo">
+            <h1 class="titulo-jogo">Atividade para conhecimento bíblico</h1>
+            
+            <!-- Placar -->
+            <div class="placar">
+                <div class="placar-item">
+                    <div class="placar-label">Acertos</div>
+                    <div class="placar-valor acertos" id="acertos">0</div>
+                </div>
+                <div class="placar-item">
+                    <div class="placar-label">Erros</div>
+                    <div class="placar-valor erros" id="erros">0</div>
+                </div>
+                <div class="placar-item">
+                    <div class="placar-label">Oportunidades</div>
+                    <div class="placar-valor oportunidades" id="oportunidades">14</div>
+                </div>
+                <div class="placar-item">
+                    <div class="placar-label">Peças reveladas</div>
+                    <div class="placar-valor pecas" id="pecas-reveladas">0/10</div>
+                </div>
+            </div>
+            
+            <!-- Texto motivacional -->
+            <p class="texto-motivacional" id="texto-motivacional">
+                Vamos aprender sobre a Bíblia e descobrir os animais!
+            </p>
+        </header>
+
+        <!-- Área principal do jogo -->
+        <main class="area-jogo">
+            <!-- Área do quebra-cabeça -->
+            <section class="area-puzzle">
+                <h2 class="titulo-puzzle">Monte o Quebra-cabeça!</h2>
+                <div class="puzzle-container" id="puzzle-container">
+                    <!-- As 10 peças do quebra-cabeça serão geradas aqui -->
+                </div>
+            </section>
+
+            <!-- Área da pergunta -->
+            <section class="area-pergunta">
+                <h2 class="titulo-pergunta">Pergunta Bíblica</h2>
+                <div class="pergunta-texto" id="pergunta-texto">
+                    Carregando pergunta...
+                </div>
+                <div class="alternativas" id="alternativas">
+                    <!-- As 4 alternativas serão geradas aqui -->
+                </div>
+            </section>
+        </main>
+
+        <!-- Área de feedback -->
+        <section class="area-feedback">
+            <div class="feedback-mensagem" id="feedback-mensagem">
+                <!-- Mensagem de feedback aparece aqui -->
+            </div>
+        </section>
+
+        <!-- Botão de próxima pergunta -->
+        <button class="btn-proxima" id="btn-proxima" disabled onclick="proximaPergunta()">
+            PERGUNTA SEGUINTE
+        </button>
+    </div>
+
+    <!-- Modal de resultado -->
+    <div class="modal" id="modal-resultado">
+        <div class="modal-conteudo">
+            <h2 class="modal-titulo" id="modal-titulo">
+                <!-- Título do resultado -->
+            </h2>
+            <p class="modal-mensagem" id="modal-mensagem">
+                <!-- Mensagem do resultado -->
+            </p>
+            
+            <!-- Imagem completa do animal -->
+            <div class="modal-imagem" id="modal-imagem">
+                <!-- Peças completas do quebra-cabeça -->
+            </div>
+            
+            <!-- Estatísticas -->
+            <div class="modal-estatisticas">
+                <div class="estatistica-item">
+                    <span class="estatistica-label">Total de Acertos:</span>
+                    <span class="estatistica-valor" id="estatistica-acertos">0</span>
+                </div>
+                <div class="estatistica-item">
+                    <span class="estatistica-label">Total de Erros:</span>
+                    <span class="estatistica-valor" id="estatistica-erros">0</span>
+                </div>
+                <div class="estatistica-item">
+                    <span class="estatistica-label">Peças Reveladas:</span>
+                    <span class="estatistica-valor" id="estatistica-pecas">0/10</span>
+                </div>
+                <div class="estatistica-item">
+                    <span class="estatistica-label">Oportunidades Usadas:</span>
+                    <span class="estatistica-valor" id="estatistica-oportunidades">0</span>
+                </div>
+            </div>
+            
+            <!-- Botão para jogar novamente -->
+            <button class="btn-jogar-novamente" id="btn-jogar-novamente" onclick="jogarNovamente()">
+                Jogar Novamente
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript Inline -->
+    <script>
+        // ============================================
+        // CONFIGURAÇÕES DO JOGO
+        // ============================================
+        
+        const CONFIG = {
+            OPORTUNIDADES_INICIAIS: 14,
+            NUMERO_PECAS: 10,
+            PUZZLE_COLUNAS: 5,
+            PUZZLE_LINHAS: 2,
+            TEMPO_FEEDBACK: 2000,
+            ATIVAR_SONS: false,
+            ATIVAR_ANIMACOES: true
+        };
+
+        // ============================================
+        // ANIMAIS COM IMAGENS REAIS
+        // ============================================
+        
+        const animaisComImagens = [
+            {
+                nome: 'Leão',
+                imagem: 'img/animais/leao.jpg',
+                descricao: 'Leão de Judá'
+            },
+            {
+                nome: 'Elefante',
+                imagem: 'img/animais/elefante.jpg',
+                descricao: 'Elefante forte'
+            },
+            {
+                nome: 'Zebra',
+                imagem: 'img/animais/zebra.jpg',
+                descricao: 'Zebra selvagem'
+            },
+            {
+                nome: 'Macaco',
+                imagem: 'img/animais/macaco.jpg',
+                descricao: 'Macaco esperto'
+            },
+            {
+                nome: 'Tartaruga',
+                imagem: 'img/animais/tartaruga.jpg',
+                descricao: 'Tartaruga marinha'
+            },
+            {
+                nome: 'Girafa',
+                imagem: 'img/animais/girafa.jpg',
+                descricao: 'Girafa alta'
+            },
+            {
+                nome: 'Tigre',
+                imagem: 'img/animais/tigre.jpg',
+                descricao: 'Tigre selvagem'
+            }
+        ];
+
+        // ============================================
+        // BANCO DE PERGUNTAS BÍBLICAS (150 perguntas)
+        // ============================================
+        
+        const perguntasBiblicas = [
+            // Criação do mundo
+            {
+                pergunta: "Quantos dias Deus levou para criar o mundo?",
+                alternativas: ["5 dias", "6 dias", "7 dias", "8 dias"],
+                correta: "6 dias"
+            },
+            {
+                pergunta: "O que Deus criou no primeiro dia?",
+                alternativas: ["Animais", "Plantas", "Luz e trevas", "Ser humano"],
+                correta: "Luz e trevas"
+            },
+            
+            // Adão e Eva
+            {
+                pergunta: "Qual era o nome do primeiro homem criado por Deus?",
+                alternativas: ["Noé", "Abraão", "Adão", "Moisés"],
+                correta: "Adão"
+            },
+            {
+                pergunta: "Qual era o nome da primeira mulher?",
+                alternativas: ["Sara", "Eva", "Maria", "Ester"],
+                correta: "Eva"
+            },
+            {
+                pergunta: "Qual fruto Adão e Eva comeram no Jardim do Éden?",
+                alternativas: ["Maçã", "Uva", "Fruto proibido", "Figos"],
+                correta: "Fruto proibido"
+            },
+            
+            // Noé e o Dilúvio
+            {
+                pergunta: "Quem construiu a arca?",
+                alternativas: ["Moisés", "Noé", "Abraão", "Davi"],
+                correta: "Noé"
+            },
+            {
+                pergunta: "Quantos animais de cada espécie entraram na arca?",
+                alternativas: ["1 par", "2 pares", "7 pares", "10 pares"],
+                correta: "2 pares"
+            },
+            {
+                pergunta: "Qual sinal Deus deu após o dilúvio?",
+                alternativas: ["Estrela", "Arco-íris", "Trovão", "Fogo"],
+                correta: "Arco-íris"
+            },
+            
+            // Torre de Babel
+            {
+                pergunta: "O que aconteceu na Torre de Babel?",
+                alternativas: ["Fogo do céu", "As línguas se confundiram", "Terremoto", "Inundação"],
+                correta: "As línguas se confundiram"
+            },
+            
+            // Abraão
+            {
+                pergunta: "Quem foi chamado de 'pai da fé'?",
+                alternativas: ["Moisés", "Abraão", "Jacó", "José"],
+                correta: "Abraão"
+            },
+            {
+                pergunta: "Qual o nome da esposa de Abraão?",
+                alternativas: ["Rebeca", "Raquel", "Sara", "Lea"],
+                correta: "Sara"
+            },
+            {
+                pergunta: "Quem Deus pediu para Abraão sacrificar?",
+                alternativas: ["Isaque", "Ismael", "Jacó", "José"],
+                correta: "Isaque"
+            },
+            
+            // Isaque, Jacó e José
+            {
+                pergunta: "Quantos filhos Jacó teve?",
+                alternativas: ["10", "11", "12", "13"],
+                correta: "12"
+            },
+            {
+                pergunta: "Quem teve o sonho da escada?",
+                alternativas: ["José", "Jacó", "Abraão", "Moisés"],
+                correta: "Jacó"
+            },
+            {
+                pergunta: "Quem interpretava sonhos no Egito?",
+                alternativas: ["Moisés", "José", "Davi", "Salomão"],
+                correta: "José"
+            },
+            
+            // Moisés
+            {
+                pergunta: "Quem foi encontrado no rio Nilo?",
+                alternativas: ["Moisés", "Sansão", "Davi", "Samuel"],
+                correta: "Moisés"
+            },
+            {
+                pergunta: "O que Moisés recebeu no Monte Sinai?",
+                alternativas: ["Coroa de ouro", "Os Dez Mandamentos", "Espada mágica", "Livro sagrado"],
+                correta: "Os Dez Mandamentos"
+            },
+            {
+                pergunta: "Qual mar Moisés abriu?",
+                alternativas: ["Mar Morto", "Mar Galileu", "Mar Vermelho", "Oceano Atlântico"],
+                correta: "Mar Vermelho"
+            },
+            
+            // Josué e Jericó
+            {
+                pergunta: "Quem sucedeu Moisés como líder?",
+                alternativas: ["Josué", "Calebe", "Gideão", "Sansão"],
+                correta: "Josué"
+            },
+            {
+                pergunta: "Como caíram os muros de Jericó?",
+                alternativas: ["Terremoto", "Trovão", "Trombetas e gritos", "Batalha"],
+                correta: "Trombetas e gritos"
+            },
+            
+            // Juízes (Gideão, Sansão)
+            {
+                pergunta: "Quem era o juiz mais forte?",
+                alternativas: ["Gideão", "Sansão", "Samuel", "Eli"],
+                correta: "Sansão"
+            },
+            {
+                pergunta: "Qual era o segredo da força de Sansão?",
+                alternativas: ["Sua espada", "Seus músculos", "Seu cabelo", "Sua oração"],
+                correta: "Seu cabelo"
+            },
+            {
+                pergunta: "Com que Gideão venceu a batalha?",
+                alternativas: ["300 homens", "1000 soldados", "Exército grande", "Anjos"],
+                correta: "300 homens"
+            },
+            
+            // Samuel, Saul e Davi
+            {
+                pergunta: "Quem ungiu Davi como rei?",
+                alternativas: ["Samuel", "Saul", "Natã", "Gade"],
+                correta: "Samuel"
+            },
+            {
+                pergunta: "Qual animal Davi matou quando jovem?",
+                alternativas: ["Urso", "Leão", "Tigre", "Dragão"],
+                correta: "Leão"
+            },
+            {
+                pergunta: "Quem Davi derrotou com uma funda?",
+                alternativas: ["Golias", "Sansão", "Faraó", "Goliath"],
+                correta: "Golias"
+            },
+            
+            // Salomão
+            {
+                pergunta: "Quem pediu sabedoria a Deus?",
+                alternativas: ["Davi", "Salomão", "Asafe", "Ezequias"],
+                correta: "Salomão"
+            },
+            {
+                pergunta: "Quantas mulheres Salomão teve?",
+                alternativas: ["300", "500", "700", "1000"],
+                correta: "700"
+            },
+            
+            // Profetas (Elias, Eliseu, Jonas)
+            {
+                pergunta: "Quem foi levado ao céu num carro de fogo?",
+                alternativas: ["Moisés", "Elias", "Eliseu", "Isaías"],
+                correta: "Elias"
+            },
+            {
+                pergunta: "Quem viveu no ventre de um grande peixe?",
+                alternativas: ["Moisés", "Jonas", "Daniel", "Jeremias"],
+                correta: "Jonas"
+            },
+            {
+                pergunta: "Quem multiplicou o azeite da viúva?",
+                alternativas: ["Elias", "Eliseu", "Isaías", "Jeremias"],
+                correta: "Eliseu"
+            },
+            
+            // Daniel
+            {
+                pergunta: "Quem sobreviveu na cova dos leões?",
+                alternativas: ["Daniel", "Sadraque", "Mesaque", "Abdenago"],
+                correta: "Daniel"
+            },
+            {
+                pergunta: "Quantos amigos de Daniel foram na fornalha?",
+                alternativas: ["2", "3", "4", "5"],
+                correta: "3"
+            },
+            
+            // Ester
+            {
+                pergunta: "Quem era rainha da Pérsia?",
+                alternativas: ["Rute", "Ester", "Sara", "Rebeca"],
+                correta: "Ester"
+            },
+            {
+                pergunta: "Quem era primo de Ester?",
+                alternativas: ["Mardoqueu", "Elias", "Esdras", "Neemias"],
+                correta: "Mardoqueu"
+            },
+            
+            // Jesus
+            {
+                pergunta: "Onde Jesus nasceu?",
+                alternativas: ["Jerusalém", "Belém", "Nazaré", "Cafarnaum"],
+                correta: "Belém"
+            },
+            {
+                pergunta: "Quantos discípulos Jesus teve?",
+                alternativas: ["10", "11", "12", "13"],
+                correta: "12"
+            },
+            {
+                pergunta: "Qual foi o primeiro milagre de Jesus?",
+                alternativas: ["Andar sobre as águas", "Curar um cego", "Transformar água em vinho", "Ressuscitar Lázaro"],
+                correta: "Transformar água em vinho"
+            },
+            {
+                pergunta: "Quem negou Jesus três vezes?",
+                alternativas: ["João", "Pedro", "Tiago", "Judas"],
+                correta: "Pedro"
+            },
+            {
+                pergunta: "Quantos pães Jesus multiplicou?",
+                alternativas: ["3", "5", "7", "12"],
+                correta: "5"
+            },
+            
+            // Mais perguntas do Antigo Testamento
+            {
+                pergunta: "Quem foi o primeiro rei de Israel?",
+                alternativas: ["Davi", "Saul", "Salomão", "Samuel"],
+                correta: "Saul"
+            },
+            {
+                pergunta: "Qual rei construiu o Templo em Jerusalém?",
+                alternativas: ["Davi", "Saul", "Salomão", "Ezequias"],
+                correta: "Salomão"
+            },
+            {
+                pergunta: "Quem foi o rei mais sábio?",
+                alternativas: ["Davi", "Salomão", "Ezequias", "Josias"],
+                correta: "Salomão"
+            },
+            {
+                pergunta: "Qual profeta foi levado ao céu num carro de fogo?",
+                alternativas: ["Moisés", "Elias", "Eliseu", "Isaías"],
+                correta: "Elias"
+            },
+            {
+                pergunta: "Quem sucedeu Elias como profeta?",
+                alternativas: ["Eliseu", "Isaías", "Jeremias", "Ezequiel"],
+                correta: "Eliseu"
+            },
+            {
+                pergunta: "Qual profeta pregou ao grande peixe?",
+                alternativas: ["Moisés", "Jonas", "Daniel", "Jeremias"],
+                correta: "Jonas"
+            },
+            {
+                pergunta: "Quem liderou o povo na terra prometida após Moisés?",
+                alternativas: ["Josué", "Calebe", "Gideão", "Sansão"],
+                correta: "Josué"
+            },
+            {
+                pergunta: "Quantas pragas Deus enviou ao Egito?",
+                alternativas: ["7", "8", "9", "10"],
+                correta: "10"
+            },
+            {
+                pergunta: "Qual foi a primeira praga do Egito?",
+                alternativas: ["Sangue", "Rãs", "Piolhos", "Moscas"],
+                correta: "Sangue"
+            },
+            {
+                pergunta: "Qual foi a última praga do Egito?",
+                alternativas: ["Trevas", "Gafanhotos", "Morte dos primogênitos", "Granizo"],
+                correta: "Morte dos primogênitos"
+            },
+            {
+                pergunta: "Quem era o irmão de Moisés?",
+                alternativas: ["Arão", "Josué", "Calebe", "Gideão"],
+                correta: "Arão"
+            },
+            {
+                pergunta: "Qual instrumento Arão usava?",
+                alternativas: ["Harpa", "Flauta", "Trombeta", "Adoço"],
+                correta: "Adoço"
+            },
+            {
+                pergunta: "Quem era a esposa de Jacó?",
+                alternativas: ["Raquel", "Lea", "Sara", "Rebeca"],
+                correta: "Raquel"
+            },
+            {
+                pergunta: "Quantos filhos Jacó teve com Raquel?",
+                alternativas: ["1", "2", "3", "4"],
+                correta: "2"
+            },
+            {
+                pergunta: "Qual era o nome do filho de Jacó que foi vendido como escravo?",
+                alternativas: ["Judá", "Benjamim", "José", "Davi"],
+                correta: "José"
+            },
+            {
+                pergunta: "Qual era o sonho de José sobre os feixes de trigo?",
+                alternativas: ["Feixes se curvando", "Feixes queimando", "Feixes voando", "Feixes crescendo"],
+                correta: "Feixes se curvando"
+            },
+            {
+                pergunta: "Qual era o sonho de José sobre o sol e a lua?",
+                alternativas: ["Sol e lua se curvando", "Sol e lua brilhando", "Sol e lua caindo", "Sol e lua dançando"],
+                correta: "Sol e lua se curvando"
+            },
+            {
+                pergunta: "Quem interpretou os sonhos do Faraó?",
+                alternativas: ["Moisés", "José", "Daniel", "Isaías"],
+                correta: "José"
+            },
+            {
+                pergunta: "Quantos anos de fartura houve no Egito?",
+                alternativas: ["5", "6", "7", "8"],
+                correta: "7"
+            },
+            {
+                pergunta: "Quantos anos de fome houve no Egito?",
+                alternativas: ["5", "6", "7", "8"],
+                correta: "7"
+            },
+            {
+                pergunta: "Qual era o nome da mãe de Samuel?",
+                alternativas: ["Ana", "Sara", "Eva", "Maria"],
+                correta: "Ana"
+            },
+            {
+                pergunta: "Quem ungiu Saul como rei?",
+                alternativas: ["Samuel", "Natã", "Gade", "Elias"],
+                correta: "Samuel"
+            },
+            {
+                pergunta: "Quem ungiu Davi como rei?",
+                alternativas: ["Samuel", "Natã", "Gade", "Elias"],
+                correta: "Samuel"
+            },
+            {
+                pergunta: "Qual animal Davi matou quando jovem?",
+                alternativas: ["Leão e urso", "Tigre e leão", "Urso e lobo", "Leão e dragão"],
+                correta: "Leão e urso"
+            },
+            {
+                pergunta: "Qual era a profissão de Davi?",
+                alternativas: ["Agricultor", "Carpinteiro", "Pastor", "Pescador"],
+                correta: "Pastor"
+            },
+            {
+                pergunta: "Qual instrumento Davi tocava?",
+                alternativas: ["Harpa", "Flauta", "Trombeta", "Adoço"],
+                correta: "Harpa"
+            },
+            {
+                pergunta: "Quem era o filho de Davi que construiu o Templo?",
+                alternativas: ["Absalão", "Salomão", "Adonias", "Natan"],
+                correta: "Salomão"
+            },
+            {
+                pergunta: "Qual era o nome da mãe de Salomão?",
+                alternativas: ["Bate-Seba", "Abigail", "Mical", "Ainoã"],
+                correta: "Bate-Seba"
+            },
+            {
+                pergunta: "Quantas esposas Salomão teve?",
+                alternativas: ["300", "500", "700", "1000"],
+                correta: "700"
+            },
+            {
+                pergunta: "Qual rainha visitou Salomão?",
+                alternativas: ["Rainha de Sabá", "Rainha do Egito", "Rainha da Assíria", "Rainha da Babilônia"],
+                correta: "Rainha de Sabá"
+            },
+            {
+                pergunta: "Qual juiz matou 600 filisteus com uma agulha de arar?",
+                alternativas: ["Sansão", "Gideão", "Jefté", "Samson"],
+                correta: "Sansão"
+            },
+            {
+                pergunta: "Qual era o segredo da força de Sansão?",
+                alternativas: ["Sua oração", "Seu cabelo", "Sua fé", "Sua espada"],
+                correta: "Seu cabelo"
+            },
+            {
+                pergunta: "Quantos homens Gideão usou para vencer os midianitas?",
+                alternativas: ["100", "200", "300", "400"],
+                correta: "300"
+            },
+            {
+                pergunta: "Qual profeta disse 'Eis que a virgem conceberá'?",
+                alternativas: ["Isaías", "Jeremias", "Ezequiel", "Daniel"],
+                correta: "Isaías"
+            },
+            {
+                pergunta: "Qual profeta foi jogado na cova dos leões?",
+                alternativas: ["Jeremias", "Ezequiel", "Daniel", "Oséias"],
+                correta: "Daniel"
+            },
+            {
+                pergunta: "Qual profeta pregou contra a idolatria de Israel?",
+                alternativas: ["Oséias", "Joel", "Amós", "Jonas"],
+                correta: "Oséias"
+            },
+            {
+                pergunta: "Qual profeta viu ossos secos ganhando vida?",
+                alternativas: ["Isaías", "Jeremias", "Ezequiel", "Daniel"],
+                correta: "Ezequiel"
+            },
+            {
+                pergunta: "Qual profeta ficou mudo por 3 anos?",
+                alternativas: ["Zacarias", "Malaquias", "Ageu", "Joel"],
+                correta: "Zacarias"
+            },
+            {
+                pergunta: "Qual foi o último profeta do Antigo Testamento?",
+                alternativas: ["Zacarias", "Malaquias", "Ageu", "Joel"],
+                correta: "Malaquias"
+            },
+            {
+                pergunta: "Qual livro fala sobre o sofrimento de Jó?",
+                alternativas: ["Salmos", "Provérbios", "Jó", "Eclesiastes"],
+                correta: "Jó"
+            },
+            {
+                pergunta: "Quantos amigos vieram consolar Jó?",
+                alternativas: ["2", "3", "4", "5"],
+                correta: "3"
+            },
+            {
+                pergunta: "Qual era a profissão de Jó?",
+                alternativas: ["Pastor", "Agricultor", "Comerciante", "Homem rico"],
+                correta: "Homem rico"
+            },
+            {
+                pergunta: "Qual livro contém cânticos de louvor?",
+                alternativas: ["Provérbios", "Salmos", "Eclesiastes", "Cânticos"],
+                correta: "Salmos"
+            },
+            {
+                pergunta: "Quem escreveu a maioria dos Salmos?",
+                alternativas: ["Salomão", "Asafe", "Davi", "Moisés"],
+                correta: "Davi"
+            },
+            {
+                pergunta: "Qual livro contém provérbios de sabedoria?",
+                alternativas: ["Salmos", "Provérbios", "Eclesiastes", "Jó"],
+                correta: "Provérbios"
+            },
+            {
+                pergunta: "Quem escreveu Provérbios?",
+                alternativas: ["Davi", "Salomão", "Isaías", "Jeremias"],
+                correta: "Salomão"
+            },
+            {
+                pergunta: "Qual livro fala sobre o sentido da vida?",
+                alternativas: ["Provérbios", "Eclesiastes", "Salmos", "Jó"],
+                correta: "Eclesiastes"
+            },
+            {
+                pergunta: "Quem escreveu Eclesiastes?",
+                alternativas: ["Davi", "Salomão", "Isaías", "Jeremias"],
+                correta: "Salomão"
+            },
+            {
+                pergunta: "Qual livro fala sobre o amor entre homem e mulher?",
+                alternativas: ["Salmos", "Provérbios", "Cânticos", "Eclesiastes"],
+                correta: "Cânticos"
+            },
+            {
+                pergunta: "Qual livro conta a história de Rute?",
+                alternativas: ["Rute", "Ester", "Tobias", "Judite"],
+                correta: "Rute"
+            },
+            {
+                pergunta: "Quem era a sogra de Rute?",
+                alternativas: ["Noemi", "Ester", "Sara", "Rebeca"],
+                correta: "Noemi"
+            },
+            {
+                pergunta: "Quem era o marido de Rute?",
+                alternativas: ["Boaz", "Elimeleque", "Malom", "Quiliom"],
+                correta: "Boaz"
+            },
+            {
+                pergunta: "Qual livro conta a história de Ester?",
+                alternativas: ["Ester", "Rute", "Tobias", "Judite"],
+                correta: "Ester"
+            },
+            {
+                pergunta: "Qual era o nome do rei que Ester casou?",
+                alternativas: ["Assuero", "Dario", "Ciro", "Nabucodonosor"],
+                correta: "Assuero"
+            },
+            {
+                pergunta: "Qual personagem salvou seu povo do genocídio?",
+                alternativas: ["Ester", "Rute", "Sara", "Rebeca"],
+                correta: "Ester"
+            },
+            
+            // Perguntas do Novo Testamento
+            {
+                pergunta: "Quem era o pai de João Batista?",
+                alternativas: ["Zacarias", "Simeão", "Ana", "José"],
+                correta: "Zacarias"
+            },
+            {
+                pergunta: "Quem era a mãe de João Batista?",
+                alternativas: ["Isabel", "Maria", "Ana", "Sara"],
+                correta: "Isabel"
+            },
+            {
+                pergunta: "Onde João Batista batizava?",
+                alternativas: ["No Jordão", "No mar Morto", "No mar da Galileia", "No rio Nilo"],
+                correta: "No Jordão"
+            },
+            {
+                pergunta: "Qual era a mensagem de João Batista?",
+                alternativas: ["Arrependei-vos", "Amai-vos", "Orai sempre", "Crede em Deus"],
+                correta: "Arrependei-vos"
+            },
+            {
+                pergunta: "Quem era o primo de Jesus?",
+                alternativas: ["João Batista", "Pedro", "Tiago", "André"],
+                correta: "João Batista"
+            },
+            {
+                pergunta: "Qual foi o primeiro milagre de Jesus?",
+                alternativas: ["Andar sobre as águas", "Curar um cego", "Transformar água em vinho", "Ressuscitar Lázaro"],
+                correta: "Transformar água em vinho"
+            },
+            {
+                pergunta: "Onde Jesus transformou água em vinho?",
+                alternativas: ["Em Caná", "Em Cafarnaum", "Em Nazaré", "Em Jerusalém"],
+                correta: "Em Caná"
+            },
+            {
+                pergunta: "Qual era a profissão de Pedro?",
+                alternativas: ["Carpinteiro", "Pescador", "Pastor", "Agricultor"],
+                correta: "Pescador"
+            },
+            {
+                pergunta: "Qual era o nome original de Pedro?",
+                alternativas: ["Simão", "André", "Tiago", "João"],
+                correta: "Simão"
+            },
+            {
+                pergunta: "Quem eram os filhos de Zebedeu?",
+                alternativas: ["Pedro e André", "Tiago e João", "Filipe e Bartolomeu", "Tomé e Mateus"],
+                correta: "Tiago e João"
+            },
+            {
+                pergunta: "Qual apóstolo era cobrador de impostos?",
+                alternativas: ["Mateus", "Pedro", "João", "Paulo"],
+                correta: "Mateus"
+            },
+            {
+                pergunta: "Qual apóstolo traiu Jesus?",
+                alternativas: ["Pedro", "Judas", "Tomé", "Mateus"],
+                correta: "Judas"
+            },
+            {
+                pergunta: "Quanto Judas recebeu para trair Jesus?",
+                alternativas: ["20 moedas", "30 moedas", "40 moedas", "50 moedas"],
+                correta: "30 moedas"
+            },
+            {
+                pergunta: "Onde Jesus orou antes da crucificação?",
+                alternativas: ["No Getsêmani", "No Monte das Oliveiras", "No Templo", "Em Cafarnaum"],
+                correta: "No Getsêmani"
+            },
+            {
+                pergunta: "Quem negou Jesus três vezes?",
+                alternativas: ["Pedro", "João", "Tiago", "André"],
+                correta: "Pedro"
+            },
+            {
+                pergunta: "Qual apóstolo duvidou da ressurreição?",
+                alternativas: ["Pedro", "João", "Tomé", "Mateus"],
+                correta: "Tomé"
+            },
+            {
+                pergunta: "Quantos dias Jesus ficou no túmulo?",
+                alternativas: ["1", "2", "3", "4"],
+                correta: "3"
+            },
+            {
+                pergunta: "Quem viu Jesus ressuscitado primeiro?",
+                alternativas: ["Maria Madalena", "Pedro", "João", "Tiago"],
+                correta: "Maria Madalena"
+            },
+            {
+                pergunta: "Quantos discípulos viram Jesus subir ao céu?",
+                alternativas: ["11", "12", "13", "14"],
+                correta: "11"
+            },
+            {
+                pergunta: "Onde Jesus subiu ao céu?",
+                alternativas: ["No Monte das Oliveiras", "No Getsêmani", "No Templo", "Em Cafarnaum"],
+                correta: "No Monte das Oliveiras"
+            },
+            {
+                pergunta: "Qual promessa Jesus deixou?",
+                alternativas: ["Voltaria", "Enviaria o Espírito", "Daria a vida eterna", "Todas as anteriores"],
+                correta: "Todas as anteriores"
+            },
+            {
+                pergunta: "Quando o Espírito Santo desceu?",
+                alternativas: ["No Natal", "Na Páscoa", "No Pentecostes", "Na Epifania"],
+                correta: "No Pentecostes"
+            },
+            {
+                pergunta: "Quem era o fariseu que se converteu?",
+                alternativas: ["Paulo", "Pedro", "João", "Tiago"],
+                correta: "Paulo"
+            },
+            {
+                pergunta: "Qual era o nome original de Paulo?",
+                alternativas: ["Saulo", "Simão", "André", "Barnabé"],
+                correta: "Saulo"
+            },
+            {
+                pergunta: "Onde Paulo teve a visão de Jesus?",
+                alternativas: ["No caminho de Damasco", "Em Jerusalém", "Em Antioquia", "Em Corinto"],
+                correta: "No caminho de Damasco"
+            },
+            {
+                pergunta: "Quem era o companheiro de Paulo?",
+                alternativas: ["Barnabé", "Pedro", "João", "Tiago"],
+                correta: "Barnabé"
+            },
+            {
+                pergunta: "Qual foi a primeira viagem missionária de Paulo?",
+                alternativas: ["Chipre e Ásia", "Grécia e Macedônia", "Roma e Espanha", "Egito e Líbia"],
+                correta: "Chipre e Ásia"
+            },
+            {
+                pergunta: "Quem escreveu Atos dos Apóstolos?",
+                alternativas: ["Lucas", "Mateus", "Marcos", "João"],
+                correta: "Lucas"
+            },
+            {
+                pergunta: "Qual evangelista era médico?",
+                alternativas: ["Mateus", "Marcos", "Lucas", "João"],
+                correta: "Lucas"
+            },
+            {
+                pergunta: "Qual evangelista era pescador?",
+                alternativas: ["Mateus", "Marcos", "Pedro", "João"],
+                correta: "João"
+            },
+            {
+                pergunta: "Qual evangelista era cobrador de impostos?",
+                alternativas: ["Mateus", "Marcos", "Lucas", "João"],
+                correta: "Mateus"
+            },
+            {
+                pergunta: "Qual evangelista começou seu livro com genealogia?",
+                alternativas: ["Mateus", "Marcos", "Lucas", "João"],
+                correta: "Mateus"
+            },
+            {
+                pergunta: "Qual evangelista começou com 'No princípio'?",
+                alternativas: ["Mateus", "Marcos", "Lucas", "João"],
+                correta: "João"
+            },
+            {
+                pergunta: "Qual evangelista escreveu para os gentios?",
+                alternativas: ["Mateus", "Marcos", "Lucas", "João"],
+                correta: "Lucas"
+            },
+            {
+                pergunta: "Qual livro fala sobre a vida da igreja primitiva?",
+                alternativas: ["Evangelhos", "Atos", "Epístolas", "Apocalipse"],
+                correta: "Atos"
+            },
+            {
+                pergunta: "Qual foi o primeiro mártir cristão?",
+                alternativas: ["Estêvão", "Pedro", "Paulo", "João"],
+                correta: "Estêvão"
+            },
+            {
+                pergunta: "Quem perseguiu os cristãos?",
+                alternativas: ["Saulo", "Herodes", "Pilatos", "Caifás"],
+                correta: "Saulo"
+            },
+            {
+                pergunta: "Qual apóstolo foi chamado de 'o discípulo amado'?",
+                alternativas: ["Pedro", "João", "Tiago", "André"],
+                correta: "João"
+            },
+            {
+                pergunta: "Qual apóstolo foi pescador?",
+                alternativas: ["Pedro", "Paulo", "Lucas", "Mateus"],
+                correta: "Pedro"
+            },
+            {
+                pergunta: "Qual apóstolo foi chamado de 'a rocha'?",
+                alternativas: ["Pedro", "Paulo", "João", "Tiago"],
+                correta: "Pedro"
+            },
+            {
+                pergunta: "Qual apóstolo foi chamado de 'o pescador de homens'?",
+                alternativas: ["Pedro", "Paulo", "João", "André"],
+                correta: "Pedro"
+            },
+            {
+                pergunta: "Qual apóstolo foi chamado de 'o evangelista'?",
+                alternativas: ["Marcos", "Lucas", "João", "Mateus"],
+                correta: "Marcos"
+            },
+            {
+                pergunta: "Qual apóstolo foi chamado de 'o teólogo'?",
+                alternativas: ["Pedro", "Paulo", "João", "Tiago"],
+                correta: "João"
+            },
+            {
+                pergunta: "Qual apóstolo foi chamado de 'o apóstolo dos gentios'?",
+                alternativas: ["Pedro", "Paulo", "João", "Tiago"],
+                correta: "Paulo"
+            },
+            {
+                pergunta: "Qual livro fala sobre o fim dos tempos?",
+                alternativas: ["Daniel", "Apocalipse", "Ezequiel", "Isaías"],
+                correta: "Apocalipse"
+            },
+            {
+                pergunta: "Quem escreveu Apocalipse?",
+                alternativas: ["Pedro", "Paulo", "João", "Tiago"],
+                correta: "João"
+            },
+            {
+                pergunta: "Onde João teve a visão do Apocalipse?",
+                alternativas: ["Em Patmos", "Em Roma", "Em Jerusalém", "Em Corinto"],
+                correta: "Em Patmos"
+            },
+            {
+                pergunta: "Qual número aparece muito no Apocalipse?",
+                alternativas: ["3", "7", "12", "40"],
+                correta: "7"
+            },
+            {
+                pergunta: "Quem é o Cordeiro no Apocalipse?",
+                alternativas: ["Jesus", "Pedro", "Paulo", "João"],
+                correta: "Jesus"
+            },
+            {
+                pergunta: "Qual é a nova Jerusalém no Apocalipse?",
+                alternativas: ["A igreja", "O céu", "O paraíso", "O reino de Deus"],
+                correta: "O céu"
+            },
+            {
+                pergunta: "Qual é a mensagem final do Apocalipse?",
+                alternativas: ["Arrependei-vos", "Amai-vos", "Orai sempre", "Vem, Senhor Jesus"],
+                correta: "Vem, Senhor Jesus"
+            }
+        ];
+
+        // ============================================
+        // VARIÁVEIS GLOBAIS DO JOGO
+        // ============================================
+        
+        let estadoJogo = {
+            acertos: 0,
+            erros: 0,
+            oportunidades: CONFIG.OPORTUNIDADES_INICIAIS,
+            pecasReveladas: 0,
+            perguntaAtual: 0,
+            perguntasEmbaralhadas: [],
+            animalAtual: null,
+            respondido: false,
+            jogoAtivo: true
+        };
+
+        // ============================================
+        // FUNÇÕES DE INICIALIZAÇÃO
+        // ============================================
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM carregado, iniciando jogo com IMAGENS REAIS...');
+            inicializarJogo();
+        });
+
+        function inicializarJogo() {
+            try {
+                console.log('Inicializando jogo com imagens reais...');
+                
+                // Embaralha as perguntas
+                estadoJogo.perguntasEmbaralhadas = embaralharArray([...perguntasBiblicas]);
+                console.log('Perguntas embaralhadas:', estadoJogo.perguntasEmbaralhadas.length);
+                
+                // Escolhe um animal aleatório
+                estadoJogo.animalAtual = animaisComImagens[Math.floor(Math.random() * animaisComImagens.length)];
+                console.log('Animal escolhido:', estadoJogo.animalAtual.nome);
+                
+                // Cria o quebra-cabeça
+                criarPuzzle();
+                
+                // Carrega a primeira pergunta
+                carregarPergunta();
+                
+                // Atualiza o placar
+                atualizarPlacar();
+                
+                console.log('Jogo com imagens reais inicializado com sucesso!');
+            } catch (error) {
+                console.error('Erro ao inicializar o jogo:', error);
+            }
+        }
+
+        // ============================================
+        // FUNÇÕES DO QUEBRA-CABEÇA
+        // ============================================
+        
+        function criarPuzzle() {
+            const container = document.getElementById('puzzle-container');
+            if (!container) {
+                console.error('Container do puzzle não encontrado!');
+                return;
+            }
+            
+            container.innerHTML = '';
+            
+            for (let i = 0; i < CONFIG.NUMERO_PECAS; i++) {
+                const piece = document.createElement('div');
+                piece.className = 'puzzle-piece';
+                piece.id = `peca-${i}`;
+                
+                // Define a cor de fundo para cada peça
+                piece.style.background = `linear-gradient(135deg, #f0f0f0, #e0e0e0)`;
+                piece.style.border = '3px solid #ccc';
+                piece.style.borderRadius = '8px';
+                piece.style.position = 'relative';
+                piece.style.overflow = 'hidden';
+                piece.style.transition = 'all 0.5s ease';
+                piece.style.display = 'flex';
+                piece.style.alignItems = 'center';
+                piece.style.justifyContent = 'center';
+                piece.style.fontSize = '2rem';
+                piece.style.fontWeight = 'bold';
+                piece.style.color = '#999';
+                
+                // Adiciona o símbolo de interrogação
+                piece.innerHTML = `<span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 2.5rem; color: #999; font-weight: bold;">?</span>`;
+                
+                container.appendChild(piece);
+            }
+            
+            console.log('Puzzle criado com', CONFIG.NUMERO_PECAS, 'peças para o animal:', estadoJogo.animalAtual.nome);
+        }
+
+        function revelarPeca(indice) {
+            console.log('Tentando revelar peça:', indice);
+            const peca = document.getElementById(`peca-${indice}`);
+            console.log('Elemento da peça:', peca);
+            
+            if (peca) {
+                console.log('Peça encontrada, classes atuais:', peca.className);
+                if (!peca.classList.contains('revelada')) {
+                    peca.classList.add('revelada');
+                    estadoJogo.pecasReveladas++;
+                    console.log('Peça revelada com sucesso! Índice:', indice, 'Total:', estadoJogo.pecasReveladas);
+                    console.log('Classes após revelar:', peca.className);
+                    
+                    // Remove o símbolo de interrogação
+                    const interrogacao = peca.querySelector('span');
+                    if (interrogacao) {
+                        interrogacao.style.display = 'none';
+                    }
+                    
+                    // Define o background com a parte correspondente da imagem do animal
+                    const imagemAnimal = estadoJogo.animalAtual.imagem;
+                    const linha = Math.floor(indice / CONFIG.PUZZLE_COLUNAS);
+                    const coluna = indice % CONFIG.PUZZLE_COLUNAS;
+                    
+                    // Calcula o background-position para mostrar a parte correta da imagem
+                    const bgPosX = -(coluna * 80); // 80px por peça
+                    const bgPosY = -(linha * 60); // 60px por peça
+                    
+                    peca.style.backgroundImage = `url(${imagemAnimal})`;
+                    peca.style.backgroundSize = '400px 120px'; // Tamanho total da imagem
+                    peca.style.backgroundPosition = `${bgPosX}px ${bgPosY}px`;
+                    peca.style.backgroundRepeat = 'no-repeat';
+                    
+                    // Força a aplicação dos estilos
+                    peca.style.transform = 'scale(1.05)';
+                    peca.style.borderColor = '#4CAF50';
+                    peca.style.boxShadow = '0 6px 20px rgba(76, 175, 80, 0.4)';
+                    peca.style.zIndex = '10';
+                    
+                    // Verifica se ganhou
+                    if (estadoJogo.pecasReveladas === CONFIG.NUMERO_PECAS) {
+                        console.log('Animal completo revelado! Finalizando jogo...');
+                        setTimeout(() => finalizarJogo(true), 1000);
+                    }
+                } else {
+                    console.log('Peça já estava revelada');
+                }
+            } else {
+                console.error('Peça não encontrada com ID:', `peca-${indice}`);
+            }
+        }
+
+        // ============================================
+        // FUNÇÕES DAS PERGUNTAS
+        // ============================================
+        
+        function carregarPergunta() {
+            console.log('Carregando pergunta...');
+            
+            if (estadoJogo.perguntaAtual >= estadoJogo.perguntasEmbaralhadas.length) {
+                // Se acabaram as perguntas, embaralha novamente
+                estadoJogo.perguntasEmbaralhadas = embaralharArray([...perguntasBiblicas]);
+                estadoJogo.perguntaAtual = 0;
+                console.log('Perguntas reembaralhadas');
+            }
+            
+            const pergunta = estadoJogo.perguntasEmbaralhadas[estadoJogo.perguntaAtual];
+            console.log('Pergunta selecionada:', pergunta);
+            
+            // Atualiza o texto da pergunta
+            const elementoPergunta = document.getElementById('pergunta-texto');
+            if (elementoPergunta) {
+                elementoPergunta.textContent = pergunta.pergunta;
+                console.log('Texto da pergunta atualizado:', pergunta.pergunta);
+            } else {
+                console.error('Elemento pergunta-texto não encontrado!');
+            }
+            
+            // Cria as alternativas
+            criarAlternativas(pergunta);
+            
+            // Reseta o estado de resposta
+            estadoJogo.respondido = false;
+            const btnProxima = document.getElementById('btn-proxima');
+            if (btnProxima) {
+                btnProxima.disabled = true;
+            }
+            
+            // Limpa o feedback anterior
+            limparFeedback();
+        }
+
+        function criarAlternativas(pergunta) {
+            const container = document.getElementById('alternativas');
+            if (!container) {
+                console.error('Container de alternativas não encontrado!');
+                return;
+            }
+            
+            container.innerHTML = '';
+            
+            // Embaralha as alternativas
+            const alternativasEmbaralhadas = embaralharArray([...pergunta.alternativas]);
+            console.log('Alternativas embaralhadas:', alternativasEmbaralhadas);
+            
+            alternativasEmbaralhadas.forEach((alternativa, index) => {
+                const botao = document.createElement('button');
+                botao.className = 'btn-alternativa';
+                botao.textContent = alternativa;
+                botao.onclick = () => verificarResposta(alternativa, pergunta.correta, botao);
+                
+                // Adiciona delay para animação de entrada
+                setTimeout(() => {
+                    botao.style.opacity = '1';
+                    botao.style.transform = 'translateY(0)';
+                }, index * 100);
+                
+                container.appendChild(botao);
+            });
+            
+            console.log('Alternativas criadas:', alternativasEmbaralhadas.length);
+        }
+
+        function verificarResposta(respostaSelecionada, respostaCorreta, botao) {
+            if (estadoJogo.respondido || !estadoJogo.jogoAtivo) return;
+            
+            console.log('Verificando resposta:', respostaSelecionada, 'Correta:', respostaCorreta);
+            
+            estadoJogo.respondido = true;
+            
+            // Desabilita todos os botões
+            const botoes = document.querySelectorAll('.btn-alternativa');
+            botoes.forEach(btn => btn.disabled = true);
+            
+            // Consome uma oportunidade
+            estadoJogo.oportunidades--;
+            
+            if (respostaSelecionada === respostaCorreta) {
+                // Acertou
+                estadoJogo.acertos++;
+                botao.classList.add('correta');
+                mostrarFeedback('ACERTOU!', 'acerto');
+                console.log('ACERTOU!');
+                
+                // Revela uma peça do quebra-cabeça
+                revelarPeca(estadoJogo.acertos - 1);
+                
+                // Atualiza texto motivacional
+                atualizarTextoMotivacional(true);
+                
+            } else {
+                // Errou
+                estadoJogo.erros++;
+                botao.classList.add('errada');
+                mostrarFeedback('ERROU', 'erro');
+                console.log('ERROU!');
+                
+                // Mostra a resposta correta
+                botoes.forEach(btn => {
+                    if (btn.textContent === respostaCorreta) {
+                        btn.classList.add('correta');
+                    }
+                });
+                
+                // Atualiza texto motivacional
+                atualizarTextoMotivacional(false);
+            }
+            
+            // Atualiza o placar
+            atualizarPlacar();
+            
+            // Habilita o botão de próxima pergunta
+            const btnProxima = document.getElementById('btn-proxima');
+            if (btnProxima) {
+                btnProxima.disabled = false;
+            }
+            
+            // Verifica se perdeu
+            if (estadoJogo.oportunidades <= 0 && estadoJogo.pecasReveladas < CONFIG.NUMERO_PECAS) {
+                setTimeout(() => finalizarJogo(false), 2000);
+            }
+        }
+
+        function proximaPergunta() {
+            if (!estadoJogo.jogoAtivo) return;
+            
+            console.log('Próxima pergunta...');
+            estadoJogo.perguntaAtual++;
+            carregarPergunta();
+        }
+
+        // ============================================
+        // FUNÇÕES DE FEEDBACK
+        // ============================================
+        
+        function mostrarFeedback(mensagem, tipo) {
+            const feedbackElement = document.getElementById('feedback-mensagem');
+            if (!feedbackElement) return;
+            
+            feedbackElement.textContent = mensagem;
+            feedbackElement.className = `feedback-mensagem ${tipo}`;
+            
+            // Mostra o feedback
+            setTimeout(() => {
+                feedbackElement.classList.add('visivel');
+            }, 100);
+            
+            // Esconde automaticamente
+            setTimeout(() => {
+                limparFeedback();
+            }, CONFIG.TEMPO_FEEDBACK);
+            
+            console.log('Feedback:', mensagem, tipo);
+        }
+
+        function limparFeedback() {
+            const feedbackElement = document.getElementById('feedback-mensagem');
+            if (feedbackElement) {
+                feedbackElement.classList.remove('visivel');
+            }
+        }
+
+        function atualizarTextoMotivacional(acertou) {
+            const textosAcerto = [
+                "Ótimo! Você está descobrindo o animal!",
+                "Parabéns! Continue assim!",
+                "Excelente! O animal está aparecendo!",
+                "Muito bem! Você é incrível!",
+                `Fantástico! O ${estadoJogo.animalAtual.nome} está tomando forma!`
+            ];
+            
+            const textosErro = [
+                "Não desista! Tente novamente!",
+                "Continue! Você consegue!",
+                "Força! Deus está com você!",
+                "Não tem problema! A próxima é sua!",
+                "Coragem! Você vai conseguir!"
+            ];
+            
+            const textosFim = [
+                "Cuidado! Estão acabando as oportunidades!",
+                "Atenção! Concentre-se mais!",
+                "Últimas chances! Dê o seu melhor!",
+                "Quase lá! Não desista agora!"
+            ];
+            
+            const elemento = document.getElementById('texto-motivacional');
+            if (!elemento) return;
+            
+            if (estadoJogo.oportunidades <= 3) {
+                elemento.textContent = textosFim[Math.floor(Math.random() * textosFim.length)];
+            } else if (acertou) {
+                elemento.textContent = textosAcerto[Math.floor(Math.random() * textosAcerto.length)];
+            } else {
+                elemento.textContent = textosErro[Math.floor(Math.random() * textosErro.length)];
+            }
+        }
+
+        // ============================================
+        // FUNÇÕES DO PLACAR
+        // ============================================
+        
+        function atualizarPlacar() {
+            const acertosElement = document.getElementById('acertos');
+            const errosElement = document.getElementById('erros');
+            const oportunidadesElement = document.getElementById('oportunidades');
+            const pecasElement = document.getElementById('pecas-reveladas');
+            
+            if (acertosElement) acertosElement.textContent = estadoJogo.acertos;
+            if (errosElement) errosElement.textContent = estadoJogo.erros;
+            if (oportunidadesElement) oportunidadesElement.textContent = estadoJogo.oportunidades;
+            if (pecasElement) pecasElement.textContent = `${estadoJogo.pecasReveladas}/${CONFIG.NUMERO_PECAS}`;
+            
+            console.log('Placar atualizado:', estadoJogo);
+        }
+
+        // ============================================
+        // FUNÇÕES DE FINALIZAÇÃO
+        // ============================================
+        
+        function finalizarJogo(venceu) {
+            console.log('Finalizando jogo, venceu:', venceu);
+            
+            estadoJogo.jogoAtivo = false;
+            
+            // Prepara o modal de resultado
+            prepararModalResultado(venceu);
+            
+            // Mostra o modal
+            setTimeout(() => {
+                const modal = document.getElementById('modal-resultado');
+                if (modal) {
+                    modal.classList.add('visivel');
+                }
+            }, 1000);
+        }
+
+        function prepararModalResultado(venceu) {
+            const modalTitulo = document.getElementById('modal-titulo');
+            const modalMensagem = document.getElementById('modal-mensagem');
+            const modalImagem = document.getElementById('modal-imagem');
+            
+            if (venceu) {
+                if (modalTitulo) {
+                    modalTitulo.textContent = 'Parabéns!';
+                    modalTitulo.className = 'modal-titulo vitoria';
+                }
+                if (modalMensagem) {
+                    modalMensagem.textContent = `Você descobriu o ${estadoJogo.animalAtual.nome}!`;
+                }
+            } else {
+                if (modalTitulo) {
+                    modalTitulo.textContent = 'Fim de Jogo';
+                    modalTitulo.className = 'modal-titulo derrota';
+                }
+                if (modalMensagem) {
+                    modalMensagem.textContent = 'Você usou todas as oportunidades';
+                }
+            }
+            
+            // Cria o quebra-cabeça completo no modal
+            if (modalImagem) {
+                modalImagem.innerHTML = '';
+                for (let i = 0; i < CONFIG.NUMERO_PECAS; i++) {
+                    const piece = document.createElement('div');
+                    piece.className = 'animal-piece';
+                    
+                    // Define o background com a parte correspondente da imagem do animal
+                    const imagemAnimal = estadoJogo.animalAtual.imagem;
+                    const linha = Math.floor(i / CONFIG.PUZZLE_COLUNAS);
+                    const coluna = i % CONFIG.PUZZLE_COLUNAS;
+                    
+                    // Calcula o background-position para mostrar a parte correta da imagem
+                    const bgPosX = -(coluna * 80); // 80px por peça
+                    const bgPosY = -(linha * 60); // 60px por peça
+                    
+                    piece.style.backgroundImage = `url(${imagemAnimal})`;
+                    piece.style.backgroundSize = '400px 120px'; // Tamanho total da imagem
+                    piece.style.backgroundPosition = `${bgPosX}px ${bgPosY}px`;
+                    piece.style.backgroundRepeat = 'no-repeat';
+                    
+                    modalImagem.appendChild(piece);
+                }
+            }
+            
+            // Atualiza as estatísticas
+            const estatisticaAcertos = document.getElementById('estatistica-acertos');
+            const estatisticaErros = document.getElementById('estatistica-erros');
+            const estatisticaPecas = document.getElementById('estatistica-pecas');
+            const estatisticaOportunidades = document.getElementById('estatistica-oportunidades');
+            
+            if (estatisticaAcertos) estatisticaAcertos.textContent = estadoJogo.acertos;
+            if (estatisticaErros) estatisticaErros.textContent = estadoJogo.erros;
+            if (estatisticaPecas) estatisticaPecas.textContent = `${estadoJogo.pecasReveladas}/${CONFIG.NUMERO_PECAS}`;
+            if (estatisticaOportunidades) estatisticaOportunidades.textContent = CONFIG.OPORTUNIDADES_INICIAIS - estadoJogo.oportunidades;
+        }
+
+        function jogarNovamente() {
+            console.log('Jogando novamente...');
+            
+            // Reseta o estado do jogo
+            estadoJogo = {
+                acertos: 0,
+                erros: 0,
+                oportunidades: CONFIG.OPORTUNIDADES_INICIAIS,
+                pecasReveladas: 0,
+                perguntaAtual: 0,
+                perguntasEmbaralhadas: [],
+                animalAtual: null,
+                respondido: false,
+                jogoAtivo: true
+            };
+            
+            // Esconde o modal
+            const modal = document.getElementById('modal-resultado');
+            if (modal) {
+                modal.classList.remove('visivel');
+            }
+            
+            // Reinicializa o jogo
+            inicializarJogo();
+        }
+
+        // ============================================
+        // FUNÇÕES UTILITÁRIAS
+        // ============================================
+        
+        function embaralharArray(array) {
+            const arrayEmbaralhado = [...array];
+            for (let i = arrayEmbaralhado.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arrayEmbaralhado[i], arrayEmbaralhado[j]] = [arrayEmbaralhado[j], arrayEmbaralhado[i]];
+            }
+            return arrayEmbaralhado;
+        }
+        
+        // Log inicial
+        console.log('Script do jogo com IMAGENS REAIS carregado com sucesso!');
+    </script>
+</body>
+</html>

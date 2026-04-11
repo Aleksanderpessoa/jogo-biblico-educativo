@@ -1,0 +1,1084 @@
+/* ============================================
+   ESTILOS GLOBAIS E CONFIGURAÇÕES BASE
+   ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Comic Sans MS', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #87CEEB 0%, #E0F6FF 50%, #FFF9E6 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* ============================================
+   TELA INICIAL - ESTILOS
+   ============================================ */
+
+/* Header com elementos decorativos */
+.header-home {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Nuvens animadas */
+.nuvens {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.nuvem {
+    position: absolute;
+    background: white;
+    border-radius: 100px;
+    opacity: 0.8;
+    animation: flutuar 20s infinite ease-in-out;
+}
+
+.nuvem::before,
+.nuvem::after {
+    content: '';
+    position: absolute;
+    background: white;
+    border-radius: 100px;
+}
+
+.nuvem1 {
+    width: 100px;
+    height: 40px;
+    top: 20%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.nuvem1::before {
+    width: 50px;
+    height: 50px;
+    top: -25px;
+    left: 10px;
+}
+
+.nuvem1::after {
+    width: 60px;
+    height: 40px;
+    top: -15px;
+    right: 10px;
+}
+
+.nuvem2 {
+    width: 80px;
+    height: 35px;
+    top: 40%;
+    right: 20%;
+    animation-delay: 5s;
+}
+
+.nuvem2::before {
+    width: 40px;
+    height: 40px;
+    top: -20px;
+    left: 15px;
+}
+
+.nuvem2::after {
+    width: 50px;
+    height: 35px;
+    top: -10px;
+    right: 15px;
+}
+
+.nuvem3 {
+    width: 120px;
+    height: 45px;
+    top: 60%;
+    left: 30%;
+    animation-delay: 10s;
+}
+
+.nuvem3::before {
+    width: 60px;
+    height: 60px;
+    top: -30px;
+    left: 20px;
+}
+
+.nuvem3::after {
+    width: 70px;
+    height: 45px;
+    top: -15px;
+    right: 20px;
+}
+
+/* Estrelas */
+.estrelas {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.estrela {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-right: 10px solid transparent;
+    border-bottom: 7px solid #FFD700;
+    border-left: 10px solid transparent;
+    transform: rotate(35deg);
+    animation: piscar 3s infinite ease-in-out;
+}
+
+.estrela::before {
+    content: '';
+    position: absolute;
+    height: 0;
+    width: 0;
+    top: -4px;
+    left: -6px;
+    border-bottom: 8px solid #FFD700;
+    border-left: 3px solid transparent;
+    border-right: 3px solid transparent;
+    transform: rotate(-35deg);
+}
+
+.estrela::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: 0px;
+    left: -10px;
+    border-right: 10px solid transparent;
+    border-bottom: 7px solid #FFD700;
+    border-left: 10px solid transparent;
+    transform: rotate(-70deg);
+}
+
+.estrela1 { top: 10%; left: 15%; animation-delay: 0s; }
+.estrela2 { top: 25%; right: 25%; animation-delay: 1s; }
+.estrela3 { top: 45%; left: 35%; animation-delay: 2s; }
+.estrela4 { top: 65%; right: 15%; animation-delay: 0.5s; }
+
+/* Arco-íris */
+.arco-iris {
+    position: absolute;
+    bottom: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.arco {
+    position: absolute;
+    border-radius: 150px 150px 0 0;
+    opacity: 0.7;
+}
+
+.arco1 {
+    width: 300px;
+    height: 150px;
+    background: linear-gradient(180deg, #FF0000, #FF7F00);
+    z-index: 5;
+}
+
+.arco2 {
+    width: 270px;
+    height: 135px;
+    background: linear-gradient(180deg, #FF7F00, #FFFF00);
+    z-index: 4;
+}
+
+.arco3 {
+    width: 240px;
+    height: 120px;
+    background: linear-gradient(180deg, #FFFF00, #00FF00);
+    z-index: 3;
+}
+
+.arco4 {
+    width: 210px;
+    height: 105px;
+    background: linear-gradient(180deg, #00FF00, #0000FF);
+    z-index: 2;
+}
+
+.arco5 {
+    width: 180px;
+    height: 90px;
+    background: linear-gradient(180deg, #0000FF, #4B0082);
+    z-index: 1;
+}
+
+/* Conteúdo principal da tela inicial */
+.main-home {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container-home {
+    width: 100%;
+    max-width: 600px;
+}
+
+.card-home {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 25px;
+    padding: 40px 30px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.card-home::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: rotate(45deg);
+    animation: brilho-card 3s infinite;
+}
+
+/* Título principal */
+.titulo-principal {
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.titulo-linha1 {
+    display: block;
+    font-size: 2.5rem;
+    color: #4169E1;
+    margin-bottom: 5px;
+}
+
+.titulo-linha2 {
+    display: block;
+    font-size: 3rem;
+    color: #FF69B4;
+    background: linear-gradient(45deg, #FF69B4, #9370DB);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Subtítulo */
+.subtitulo {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 30px;
+    line-height: 1.4;
+}
+
+/* Área visual com elementos infantis cristãos */
+.area-visual {
+    position: relative;
+    height: 150px;
+    margin: 30px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icone-cristao {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.cruz-simples {
+    width: 30px;
+    height: 50px;
+    background: linear-gradient(180deg, #FFD700, #FFA500);
+    position: relative;
+    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+}
+
+.cruz-simples::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: -10px;
+    width: 50px;
+    height: 30px;
+    background: linear-gradient(180deg, #FFD700, #FFA500);
+    border-radius: 5px;
+}
+
+/* Animais amigáveis */
+.animais-amigaveis {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.animal {
+    position: absolute;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease;
+}
+
+.animal.ovelha {
+    width: 40px;
+    height: 35px;
+    background: white;
+    border-radius: 50%;
+    top: 20%;
+    left: 20%;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.animal.ovelha::before {
+    content: ' fluffy ';
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 8px;
+    color: #ccc;
+}
+
+.animal.leaozinho {
+    width: 35px;
+    height: 35px;
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    border-radius: 50%;
+    top: 60%;
+    right: 25%;
+    box-shadow: 0 5px 10px rgba(255, 165, 0, 0.3);
+}
+
+.animal.leaozinho::before {
+    content: ' rawr ';
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 8px;
+    color: #FF6347;
+}
+
+.animal.passarinho {
+    width: 25px;
+    height: 25px;
+    background: linear-gradient(135deg, #87CEEB, #4169E1);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    top: 30%;
+    right: 20%;
+    box-shadow: 0 3px 8px rgba(65, 105, 225, 0.3);
+}
+
+.animal.passarinho::before {
+    content: ' tweet ';
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 6px;
+    color: #4169E1;
+}
+
+/* Brilhos */
+.brilhos {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.brilho {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #FFD700;
+    border-radius: 50%;
+    opacity: 0;
+    animation: brilhar 2s infinite ease-in-out;
+}
+
+.brilho1 { top: 10%; left: 30%; animation-delay: 0s; }
+.brilho2 { top: 50%; right: 20%; animation-delay: 0.7s; }
+.brilho3 { bottom: 20%; left: 40%; animation-delay: 1.4s; }
+
+/* Botão principal */
+.btn-iniciar {
+    position: relative;
+    background: linear-gradient(135deg, #4169E1, #9370DB);
+    color: white;
+    border: none;
+    padding: 20px 40px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 25px rgba(65, 105, 225, 0.3);
+    overflow: hidden;
+    margin: 30px 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-iniciar:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(65, 105, 225, 0.4);
+    background: linear-gradient(135deg, #5179F1, #A380ED);
+}
+
+.btn-iniciar:active {
+    transform: translateY(-1px);
+}
+
+.btn-brilho {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transform: rotate(45deg);
+    transition: all 0.6s ease;
+}
+
+.btn-iniciar:hover .btn-brilho {
+    transform: rotate(45deg) translate(50%, 50%);
+}
+
+/* Mensagem motivacional */
+.mensagem-motivacional {
+    font-size: 1rem;
+    color: #666;
+    font-style: italic;
+    margin-top: 20px;
+}
+
+/* Rodapé */
+.footer-home {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* ============================================
+   TELA DO JOGO - ESTILOS
+   ============================================ */
+
+/* Container principal do jogo */
+.container-jogo {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+/* Cabeçalho do jogo */
+.header-jogo {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    text-align: center;
+}
+
+.titulo-jogo {
+    font-size: 2.5rem;
+    color: #4169E1;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+}
+
+/* Placar */
+.placar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.placar-item {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    padding: 15px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.placar-item:hover {
+    transform: translateY(-2px);
+}
+
+.placar-label {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.placar-valor {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #4169E1;
+}
+
+.placar-valor.acertos { color: #28a745; }
+.placar-valor.erros { color: #dc3545; }
+.placar-valor.oportunidades { color: #ffc107; }
+.placar-valor.pecas { color: #17a2b8; }
+
+/* Texto motivacional */
+.texto-motivacional {
+    font-size: 1.1rem;
+    color: #666;
+    font-style: italic;
+    margin-top: 15px;
+}
+
+/* Área principal do jogo */
+.area-jogo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+/* Área do quebra-cabeça */
+.area-puzzle {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.titulo-puzzle {
+    font-size: 1.5rem;
+    color: #4169E1;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.puzzle-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 3px;
+    width: 100%;
+    max-width: 400px;
+    height: 300px;
+    margin: 0 auto;
+    background: #e9ecef;
+    border-radius: 15px;
+    padding: 10px;
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.puzzle-piece {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.puzzle-piece::before {
+    content: '?';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    color: #adb5bd;
+    font-weight: bold;
+}
+
+.puzzle-piece.revelada {
+    animation: revelar-peca 0.8s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.puzzle-piece.revelada::before {
+    display: none;
+}
+
+/* Área da pergunta */
+.area-pergunta {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.titulo-pergunta {
+    font-size: 1.5rem;
+    color: #4169E1;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.pergunta-texto {
+    font-size: 1.3rem;
+    color: #333;
+    margin-bottom: 25px;
+    text-align: center;
+    line-height: 1.5;
+    font-weight: 500;
+}
+
+.alternativas {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+}
+
+.btn-alternativa {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    color: #333;
+    border: 2px solid #dee2e6;
+    padding: 15px 20px;
+    font-size: 1.1rem;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.btn-alternativa:hover:not(:disabled) {
+    background: linear-gradient(135deg, #e9ecef, #dee2e6);
+    border-color: #4169E1;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(65, 105, 225, 0.2);
+}
+
+.btn-alternativa:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.btn-alternativa.correta {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+    border-color: #28a745;
+    animation: acertar 0.6s ease;
+}
+
+.btn-alternativa.errada {
+    background: linear-gradient(135deg, #dc3545, #c82333);
+    color: white;
+    border-color: #dc3545;
+    animation: errar 0.6s ease;
+}
+
+/* Área de feedback */
+.area-feedback {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    text-align: center;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.feedback-mensagem {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.5s ease;
+}
+
+.feedback-mensagem.acerto {
+    color: #28a745;
+}
+
+.feedback-mensagem.erro {
+    color: #dc3545;
+    font-size: 2.5rem;
+}
+
+.feedback-mensagem.visivel {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Botão de próxima pergunta */
+.btn-proxima {
+    background: linear-gradient(135deg, #17a2b8, #138496);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 25px rgba(23, 162, 184, 0.3);
+    margin: 20px auto;
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-proxima:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(23, 162, 184, 0.4);
+    background: linear-gradient(135deg, #20c997, #1ea085);
+}
+
+.btn-proxima:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Modal de resultado */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.visivel {
+    display: flex;
+    animation: aparecer-modal 0.5s ease;
+}
+
+.modal-conteudo {
+    background: white;
+    border-radius: 25px;
+    padding: 40px;
+    max-width: 600px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: entrar-modal 0.6s ease;
+}
+
+.modal-titulo {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.modal-titulo.vitoria {
+    color: #28a745;
+    background: linear-gradient(45deg, #28a745, #20c997);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.modal-titulo.derrota {
+    color: #dc3545;
+}
+
+.modal-mensagem {
+    font-size: 1.3rem;
+    color: #666;
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+.modal-estatisticas {
+    background: #f8f9fa;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.estatistica-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.estatistica-item:last-child {
+    border-bottom: none;
+}
+
+.estatistica-label {
+    font-weight: bold;
+    color: #333;
+}
+
+.estatistica-valor {
+    color: #4169E1;
+    font-weight: bold;
+}
+
+.modal-imagem {
+    width: 200px;
+    height: 200px;
+    margin: 20px auto;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.btn-jogar-novamente {
+    background: linear-gradient(135deg, #4169E1, #9370DB);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 25px rgba(65, 105, 225, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-jogar-novamente:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(65, 105, 225, 0.4);
+    background: linear-gradient(135deg, #5179F1, #A380ED);
+}
+
+/* ============================================
+   ANIMAÇÕES
+   ============================================ */
+
+@keyframes flutuar {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+}
+
+@keyframes piscar {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+@keyframes brilho-card {
+    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+@keyframes brilhar {
+    0%, 100% { opacity: 0; transform: scale(0); }
+    50% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes revelar-peca {
+    0% { transform: rotateY(180deg) scale(0); opacity: 0; }
+    50% { transform: rotateY(90deg) scale(1.1); }
+    100% { transform: rotateY(0deg) scale(1); opacity: 1; }
+}
+
+@keyframes acertar {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+@keyframes errar {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+@keyframes aparecer-modal {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes entrar-modal {
+    0% { transform: scale(0.8) translateY(50px); opacity: 0; }
+    100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+@keyframes celebrar {
+    0% { transform: scale(1) rotate(0deg); }
+    25% { transform: scale(1.1) rotate(5deg); }
+    50% { transform: scale(1.2) rotate(-5deg); }
+    75% { transform: scale(1.1) rotate(5deg); }
+    100% { transform: scale(1) rotate(0deg); }
+}
+
+/* ============================================
+   RESPONSIVIDADE
+   ============================================ */
+
+/* Tablets */
+@media (max-width: 768px) {
+    .titulo-linha1 {
+        font-size: 2rem;
+    }
+    
+    .titulo-linha2 {
+        font-size: 2.5rem;
+    }
+    
+    .area-jogo {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .placar {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .puzzle-container {
+        max-width: 350px;
+        height: 250px;
+    }
+    
+    .modal-conteudo {
+        padding: 30px 20px;
+    }
+    
+    .modal-titulo {
+        font-size: 2rem;
+    }
+}
+
+/* Celulares */
+@media (max-width: 480px) {
+    .card-home {
+        padding: 30px 20px;
+    }
+    
+    .titulo-linha1 {
+        font-size: 1.8rem;
+    }
+    
+    .titulo-linha2 {
+        font-size: 2.2rem;
+    }
+    
+    .subtitulo {
+        font-size: 1rem;
+    }
+    
+    .btn-iniciar {
+        padding: 15px 30px;
+        font-size: 1.1rem;
+    }
+    
+    .titulo-jogo {
+        font-size: 2rem;
+    }
+    
+    .placar {
+        grid-template-columns: 1fr;
+    }
+    
+    .puzzle-container {
+        grid-template-columns: repeat(5, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        max-width: 300px;
+        height: 200px;
+    }
+    
+    .pergunta-texto {
+        font-size: 1.1rem;
+    }
+    
+    .btn-alternativa {
+        padding: 12px 15px;
+        font-size: 1rem;
+    }
+    
+    .feedback-mensagem {
+        font-size: 1.5rem;
+    }
+    
+    .feedback-mensagem.erro {
+        font-size: 2rem;
+    }
+    
+    .modal-conteudo {
+        padding: 25px 15px;
+    }
+    
+    .modal-titulo {
+        font-size: 1.8rem;
+    }
+    
+    .modal-mensagem {
+        font-size: 1.1rem;
+    }
+    
+    .footer-home {
+        font-size: 0.8rem;
+        padding: 10px;
+    }
+}
+
+/* Paisagem em celulares */
+@media (max-width: 480px) and (orientation: landscape) {
+    .card-home {
+        padding: 20px 15px;
+    }
+    
+    .area-visual {
+        height: 100px;
+    }
+    
+    .btn-iniciar {
+        margin: 20px 0;
+        padding: 12px 25px;
+    }
+}

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atividade para conhecimento bíblico</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Cabeçalho com elementos decorativos -->
+    <header class="header-home">
+        <div class="nuvens">
+            <div class="nuvem nuvem1"></div>
+            <div class="nuvem nuvem2"></div>
+            <div class="nuvem nuvem3"></div>
+        </div>
+        
+        <div class="estrelas">
+            <div class="estrela estrela1"></div>
+            <div class="estrela estrela2"></div>
+            <div class="estrela estrela3"></div>
+            <div class="estrela estrela4"></div>
+        </div>
+        
+        <div class="arco-iris">
+            <div class="arco arco1"></div>
+            <div class="arco arco2"></div>
+            <div class="arco arco3"></div>
+            <div class="arco arco4"></div>
+            <div class="arco arco5"></div>
+        </div>
+    </header>
+
+    <!-- Conteúdo principal -->
+    <main class="main-home">
+        <div class="container-home">
+            <!-- Card principal -->
+            <div class="card-home">
+                <!-- Título principal -->
+                <h1 class="titulo-principal">
+                    <span class="titulo-linha1">Atividade para</span>
+                    <span class="titulo-linha2">conhecimento bíblico</span>
+                </h1>
+                
+                <!-- Subtítulo -->
+                <p class="subtitulo">
+                    Aprenda sobre a Bíblia brincando e monte lindas imagens!
+                </p>
+                
+                <!-- Área visual com elementos infantis cristãos -->
+                <div class="area-visual">
+                    <div class="icone-cristao">
+                        <div class="cruz-simples"></div>
+                    </div>
+                    <div class="animais-amigaveis">
+                        <div class="animal ovelha"></div>
+                        <div class="animal leaozinho"></div>
+                        <div class="animal passarinho"></div>
+                    </div>
+                    <div class="brilhos">
+                        <div class="brilho brilho1"></div>
+                        <div class="brilho brilho2"></div>
+                        <div class="brilho brilho3"></div>
+                    </div>
+                </div>
+                
+                <!-- Botão principal -->
+                <button class="btn-iniciar" onclick="iniciarJogo()">
+                    <span class="btn-texto">INICIAR ATIVIDADE</span>
+                    <div class="btn-brilho"></div>
+                </button>
+                
+                <!-- Mensagem motivacional -->
+                <p class="mensagem-motivacional">
+                    Descubra as histórias da Bíblia de forma divertida!
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="footer-home">
+        <p>&copy; 2024 Atividade para conhecimento bíblico - Aprendendo com amor</p>
+    </footer>
+
+    <script>
+        // Função para iniciar o jogo
+        function iniciarJogo() {
+            // Redireciona para a página do jogo
+            window.location.href = 'jogo.html';
+        }
+        
+        // Adiciona animações sutis quando a página carrega
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animação de entrada para os elementos
+            const elementos = document.querySelectorAll('.nuvem, .estrela, .animal, .brilho');
+            elementos.forEach((elemento, index) => {
+                setTimeout(() => {
+                    elemento.style.opacity = '1';
+                    elemento.style.transform = 'translateY(0)';
+                }, index * 200);
+            });
+        });
+    </script>
+</body>
+</html>
