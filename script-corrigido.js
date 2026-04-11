@@ -676,6 +676,7 @@ function fecharVersiculo() {
 // ============================================
 
 function carregarPergunta() {
+    console.log('carregarPergunta chamada');
     if (estadoJogo.perguntaAtual >= estadoJogo.perguntasEmbaralhadas.length) {
         // Se acabaram as perguntas, embaralha novamente
         estadoJogo.perguntasEmbaralhadas = embaralharArray([...perguntasBiblicas]);
