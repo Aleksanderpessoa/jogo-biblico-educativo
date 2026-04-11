@@ -587,13 +587,11 @@ function criarPuzzle() {
 }
 
 function revelarPeca(indice) {
-    console.log('revelarPeca chamada com indice:', indice);
     const peca = document.getElementById(`peca-${indice}`);
     if (peca && !peca.classList.contains('revelada')) {
         peca.classList.add('revelada');
         estadoJogo.pecasReveladas++;
         
-        console.log('Peça revelada, mostrando versículo...');
         // Mostra versículo de benevolência
         mostrarVersiculoBenevolencia();
         
@@ -605,25 +603,23 @@ function revelarPeca(indice) {
 }
 
 function mostrarVersiculoBenevolencia() {
-    console.log('mostrarVersiculoBenevolencia chamada');
-    console.log('Versículos já revelados:', estadoJogo.versiculosRevelados.length);
-    console.log('Total de versículos disponíveis:', versiculosBenevolencia.length);
-    
     // Verifica se ainda há versículos para mostrar
     if (estadoJogo.versiculosRevelados.length >= versiculosBenevolencia.length) {
-        console.log('Todos os versículos já foram revelados');
         return;
     }
     
     // Encontra o próximo versículo não revelado
     let proximoIndice = estadoJogo.versiculosRevelados.length;
-    console.log('Próximo índice de versículo:', proximoIndice);
     
     if (proximoIndice < versiculosBenevolencia.length) {
         const versiculo = versiculosBenevolencia[proximoIndice];
         estadoJogo.versiculosRevelados.push(proximoIndice);
         
-        console.log('Versículo selecionado:', versiculo.referencia);
+        // Remove modal anterior se existir
+        const modalAnterior = document.querySelector('.modal-versiculo');
+        if (modalAnterior) {
+            modalAnterior.remove();
+        }
         
         // Cria modal para mostrar o versículo
         const modalVersiculo = document.createElement('div');
@@ -639,7 +635,6 @@ function mostrarVersiculoBenevolencia() {
         `;
         
         document.body.appendChild(modalVersiculo);
-        console.log('Modal do versículo adicionado ao DOM');
         
         // Adiciona efeito de fade in
         setTimeout(() => {
@@ -670,7 +665,6 @@ function fecharVersiculo() {
 // ============================================
 
 function carregarPergunta() {
-    console.log('carregarPergunta chamada');
     if (estadoJogo.perguntaAtual >= estadoJogo.perguntasEmbaralhadas.length) {
         // Se acabaram as perguntas, embaralha novamente
         estadoJogo.perguntasEmbaralhadas = embaralharArray([...perguntasBiblicas]);
@@ -714,8 +708,6 @@ function criarAlternativas(pergunta) {
         botao.textContent = alternativa;
         botao.onclick = () => verificarResposta(alternativa, pergunta.correta, botao);
         
-        console.log('Botão criado:', alternativa, 'com onclick atribuído');
-        
         // Adiciona delay para animação de entrada
         setTimeout(() => {
             botao.style.opacity = '1';
@@ -727,7 +719,6 @@ function criarAlternativas(pergunta) {
 }
 
 function verificarResposta(respostaSelecionada, respostaCorreta, botao) {
-    console.log('verificarResposta chamada - Resposta:', respostaSelecionada, 'Correta:', respostaCorreta);
     if (estadoJogo.respondido || !estadoJogo.jogoAtivo) return;
     
     estadoJogo.respondido = true;
