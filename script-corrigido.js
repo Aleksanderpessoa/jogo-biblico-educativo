@@ -603,6 +603,9 @@ function revelarPeca(indice) {
 }
 
 function mostrarVersiculoBenevolencia() {
+    // Teste simples com alert
+    alert('Versículo sendo exibido! Acerto: ' + (estadoJogo.versiculosRevelados.length + 1));
+    
     // Verifica se ainda há versículos para mostrar
     if (estadoJogo.versiculosRevelados.length >= versiculosBenevolencia.length) {
         return;
