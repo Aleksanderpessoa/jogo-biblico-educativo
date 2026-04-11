@@ -603,65 +603,11 @@ function revelarPeca(indice) {
 }
 
 function mostrarFeedbackQuebraCabeca(tipo, versiculo = null) {
-    // Remove feedback anterior se existir
-    const feedbackAnterior = document.querySelector('.feedback-quebra-cabeca');
-    if (feedbackAnterior) {
-        feedbackAnterior.remove();
-    }
-    
-    // Cria elemento de feedback
-    const feedback = document.createElement('div');
-    feedback.className = 'feedback-quebra-cabeca';
-    
+    // Teste simples com alert
     if (tipo === 'acerto') {
-        feedback.innerHTML = `
-            <div class="feedback-acerto">
-                <h3>PARABÉNS! </h3>
-                <p>${versiculo.versiculo}</p>
-                <small>${versiculo.referencia}</small>
-            </div>
-        `;
-        feedback.classList.add('feedback-acerto-container');
+        alert('ACERTOU! Versículo: ' + versiculo.referencia);
     } else {
-        const dicas = [
-            "Continue tentando! Deus te ajuda!",
-            "Não desista! A fé move montanhas!",
-            "Tente novamente! Com Deus tudo é possível!",
-            "Coragem! Você consegue!",
-            "Confie em Deus! Ele está com você!"
-        ];
-        const dicaAleatoria = dicas[Math.floor(Math.random() * dicas.length)];
-        
-        feedback.innerHTML = `
-            <div class="feedback-erro">
-                <h3>TENTE NOVAMENTE! </h3>
-                <p>${dicaAleatoria}</p>
-            </div>
-        `;
-        feedback.classList.add('feedback-erro-container');
-    }
-    
-    // Adiciona ao container do quebra-cabeça
-    const puzzleContainer = document.getElementById('puzzle-container');
-    if (puzzleContainer) {
-        puzzleContainer.appendChild(feedback);
-        
-        // Animação de entrada
-        setTimeout(() => {
-            feedback.style.opacity = '1';
-            feedback.style.transform = 'translateY(-10px)';
-        }, 10);
-        
-        // Auto-remove após 3 segundos
-        setTimeout(() => {
-            feedback.style.opacity = '0';
-            feedback.style.transform = 'translateY(0)';
-            setTimeout(() => {
-                if (feedback.parentNode) {
-                    feedback.remove();
-                }
-            }, 300);
-        }, 3000);
+        alert('ERROU! Tente novamente!');
     }
 }
 
