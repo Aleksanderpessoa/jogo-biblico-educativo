@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atividade para conhecimento bíblico - Jogo</title>
+    <title>Quiz Bíblico Educativo - Conhecimento da Bíblia</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Container principal do jogo -->
+    <!-- Container principal do jogo - QUIZ PURO -->
     <div class="container-jogo">
         <!-- Cabeçalho do jogo -->
         <header class="header-jogo">
-            <h1 class="titulo-jogo">Atividade para conhecimento bíblico</h1>
+            <h1 class="titulo-jogo">Quiz Bíblico Educativo</h1>
             
-            <!-- Placar -->
+            <!-- Placar - Quiz Only -->
             <div class="placar">
                 <div class="placar-item">
                     <div class="placar-label">Acertos</div>
@@ -28,14 +28,14 @@
                     <div class="placar-valor oportunidades" id="oportunidades">14</div>
                 </div>
                 <div class="placar-item">
-                    <div class="placar-label">Peças reveladas</div>
-                    <div class="placar-valor pecas" id="pecas-reveladas">0/10</div>
+                    <div class="placar-label">Perguntas Respondidas</div>
+                    <div class="placar-valor perguntas" id="perguntas-respondidas">0</div>
                 </div>
             </div>
             
-            <!-- Texto motivacional -->
+            <!-- Texto motivacional - Quiz Focus -->
             <p class="texto-motivacional" id="texto-motivacional">
-                Vamos aprender sobre a Bíblia e montar uma imagem linda!
+                Responda 10 perguntas corretas para vencer e descobrir versículos inspiradores!
             </p>
         </header>
 
@@ -44,27 +44,26 @@
             <!-- Área de boas-vindas -->
             <section class="area-boas-vindas">
                 <div class="welcome-card">
-                    <h2 class="welcome-titulo">Seja Bem-Vindo!</h2>
+                    <h2 class="welcome-titulo">Seja bem-vindo ao Quiz Bíblico!</h2>
                     <div class="welcome-conteudo">
-                        <p class="welcome-texto">Olá! Que bom ter você aqui para aprender sobre a Bíblia!</p>
+                        <p class="welcome-texto">Aprenda a Bíblia brincando!</p>
                         <div class="welcome-icones">
-                            <div class="icone"> bible</div>
-                            <div class="icone"> book</div>
-                            <div class="icone"> heart</div>
+                            <div class="icone">📖</div>
+                            <div class="icone">✝️</div>
+                            <div class="icone">❤️</div>
                         </div>
-                        <p class="welcome-instrucao">Responda às perguntas abaixo e descubra versículos maravilhosos!</p>
+                        <button class="btn-comecar-quiz" onclick="iniciarQuiz()">Começar Quiz!</button>
+                        <p class="welcome-instrucao">Responda perguntas e descubra versículos da Bíblia!</p>
                     </div>
                 </div>
             </section>
 
-            <!-- Área da pergunta -->
-            <section class="area-pergunta">
+            <!-- Área da pergunta (hidden initially) -->
+            <section class="area-pergunta" style="display: none;">
                 <h2 class="titulo-pergunta">Pergunta Bíblica</h2>
-                <div class="pergunta-texto" id="pergunta-texto">
-                    Carregando pergunta...
-                </div>
+                <div class="pergunta-texto" id="pergunta-texto">Carregando pergunta...</div>
                 <div class="alternativas" id="alternativas">
-                    <!-- As 4 alternativas serão geradas aqui -->
+                    <!-- Alternativas geradas dinamicamente -->
                 </div>
             </section>
         </main>
@@ -72,42 +71,37 @@
         <!-- Área de feedback -->
         <section class="area-feedback">
             <div class="feedback-mensagem" id="feedback-mensagem">
-                <!-- Mensagem de feedback aparece aqui -->
+                <!-- Feedback dinâmico aqui -->
             </div>
         </section>
 
-        <!-- Botão de próxima pergunta -->
-        <button class="btn-proxima" id="btn-proxima" disabled onclick="proximaPergunta()">
-            PERGUNTA SEGUINTE
+        <!-- Botão próxima pergunta -->
+        <button class="btn-proxima" id="btn-proxima" style="display: none;" disabled onclick="proximaPergunta()">
+            Próxima Pergunta
         </button>
     </div>
 
-    <!-- Modal de resultado -->
+    <!-- Modal de resultado final -->
     <div class="modal" id="modal-resultado">
         <div class="modal-conteudo">
-            <h2 class="modal-titulo" id="modal-titulo">
-                <!-- Título do resultado -->
-            </h2>
-            <p class="modal-mensagem" id="modal-mensagem">
-                <!-- Mensagem do resultado -->
-            </p>
+            <h2 class="modal-titulo" id="modal-titulo"><!-- Título dinâmico --></h2>
+            <p class="modal-mensagem" id="modal-mensagem"><!-- Mensagem dinâmica --></p>
             
-            <!-- Imagem completa -->
-            <img class="modal-imagem" id="modal-imagem" alt="Imagem completa">
+            <!-- Quiz puro - sem imagem puzzle -->
             
-            <!-- Estatísticas -->
+            <!-- Estatísticas finais -->
             <div class="modal-estatisticas">
                 <div class="estatistica-item">
-                    <span class="estatistica-label">Total de Acertos:</span>
+                    <span class="estatistica-label">Total Acertos:</span>
                     <span class="estatistica-valor" id="estatistica-acertos">0</span>
                 </div>
                 <div class="estatistica-item">
-                    <span class="estatistica-label">Total de Erros:</span>
+                    <span class="estatistica-label">Total Erros:</span>
                     <span class="estatistica-valor" id="estatistica-erros">0</span>
                 </div>
                 <div class="estatistica-item">
-                    <span class="estatistica-label">Peças Reveladas:</span>
-                    <span class="estatistica-valor" id="estatistica-pecas">0/10</span>
+                    <span class="estatistica-label">Perguntas Respondidas:</span>
+                    <span class="estatistica-valor" id="estatistica-perguntas">0</span>
                 </div>
                 <div class="estatistica-item">
                     <span class="estatistica-label">Oportunidades Usadas:</span>
@@ -115,14 +109,13 @@
                 </div>
             </div>
             
-            <!-- Botão para jogar novamente -->
-            <button class="btn-jogar-novamente" id="btn-jogar-novamente" onclick="jogarNovamente()">
+            <button class="btn-jogar-novamente" onclick="jogarNovamente()">
                 Jogar Novamente
             </button>
         </div>
     </div>
 
-    <!-- Scripts -->
+    <!-- Script principal - Quiz Only -->
     <script src="script-corrigido.js"></script>
 </body>
 </html>

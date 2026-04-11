@@ -515,10 +515,7 @@ let estadoJogo = {
 // FUNÇÕES DE INICIALIZAÇÃO
 // ============================================
 
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM carregado, iniciando jogo...');
-    inicializarJogo();
-});
+console.log('Script carregado. Aguardando botão \"Vamos lá!\" para iniciar.'); // Init manual now
 
 function inicializarJogo() {
     try {
@@ -677,66 +674,7 @@ function criarAlternativas(pergunta) {
     });
 }
 
-function verificarResposta(respostaSelecionada, respostaCorreta, botao) {
-    alert('verificarResposta chamada! Resposta: ' + respostaSelecionada);
-    
-    if (estadoJogo.respondido || !estadoJogo.jogoAtivo) return;
-    
-    estadoJogo.respondido = true;
-    
-    // Desabilita todos os botões
-    const botoes = document.querySelectorAll('.btn-alternativa');
-    botoes.forEach(btn => btn.disabled = true);
-    
-    // Consome uma oportunidade
-    estadoJogo.oportunidades--;
-    
-    if (respostaSelecionada === respostaCorreta) {
-        // Acertou
-        estadoJogo.acertos++;
-        botao.classList.add('correta');
-        mostrarFeedback('ACERTOU!', 'acerto');
-        
-        // Mostra mensagem de sucesso
-        mostrarVersiculoBenevolencia();
-        
-        // Atualiza texto motivacional
-        atualizarTextoMotivacional(true);
-        
-    } else {
-        // Errou
-        estadoJogo.erros++;
-        botao.classList.add('errada');
-        mostrarFeedback('ERROU', 'erro');
-        
-        // Mostra mensagem de erro
-        mostrarMensagem('erro');
-        
-        // Mostra a resposta correta
-        botoes.forEach(btn => {
-            if (btn.textContent === respostaCorreta) {
-                btn.classList.add('correta');
-            }
-        });
-        
-        // Atualiza texto motivacional
-        atualizarTextoMotivacional(false);
-    }
-    
-    // Atualiza o placar
-    atualizarPlacar();
-    
-    // Habilita o botão de próxima pergunta
-    const btnProxima = document.getElementById('btn-proxima');
-    if (btnProxima) {
-        btnProxima.disabled = false;
-    }
-    
-    // Verifica se perdeu
-    if (estadoJogo.oportunidades <= 0) {
-        setTimeout(() => finalizarJogo(false), 2000);
-    }
-}
+function verificarResposta(respostaSelecionada, respostaCorreta, botao) {\n    if (estadoJogo.respondido || !estadoJogo.jogoAtivo) return;\n    \n    estadoJogo.respondido = true;\n    \n    // Desabilita todos os botões\n    const botoes = document.querySelectorAll('.btn-alternativa');\n    botoes.forEach(btn => btn.disabled = true);\n    \n    // Consome uma oportunidade\n    estadoJogo.oportunidades--;\n    \n    if (respostaSelecionada === respostaCorreta) {\n        // ACERTOU\n        estadoJogo.acertos++;\n        botao.classList.add('correta');\n        mostrarMensagem('acerto', null);\n        atualizarTextoMotivacional(true);\n        mostrarVersiculoBenevolencia();\n        \n        // Check win condition (10 acertos)\n        if (estadoJogo.acertos >= 10) {\n            setTimeout(() => finalizarJogo(true), 2000);\n            return;\n        }\n        \n    } else {\n        // ERROU\n        estadoJogo.erros++;\n        botao.classList.add('errada');\n        mostrarMensagem('erro');\n        atualizarTextoMotivacional(false);\n        \n        // Highlight correct answer\n        botoes.forEach(btn => {\n            if (btn.textContent === respostaCorreta) {\n                btn.classList.add('correta');\n            }\n        });\n    }\n    \n    // Update UI\n    atualizarPlacar();\n    \n    const btnProxima = document.getElementById('btn-proxima');\n    if (btnProxima) btnProxima.disabled = false;\n    \n    // Loss check\n    if (estadoJogo.oportunidades <= 0) {\n        setTimeout(() => finalizarJogo(false), 2000);\n    }\n}
 
 function proximaPergunta() {
     if (!estadoJogo.jogoAtivo) return;
@@ -823,8 +761,7 @@ function atualizarPlacar() {
     if (acertosElement) acertosElement.textContent = estadoJogo.acertos;
     if (errosElement) errosElement.textContent = estadoJogo.erros;
     if (oportunidadesElement) oportunidadesElement.textContent = estadoJogo.oportunidades;
-    if (pecasElement) pecasElement.textContent = `${estadoJogo.acertos} respostas`;
-}
+if (pecasElement) pecasElement.textContent = `${estadoJogo.acertos + estadoJogo.erros} respostas`;\n}
 
 // ============================================
 // FUNÇÕES DE FINALIZAÇÃO
@@ -911,6 +848,8 @@ function jogarNovamente() {
 // ============================================
 // FUNÇÕES UTILITÁRIAS
 // ============================================
+
+function iniciarQuiz() {\n    // Hide welcome, show game\n    document.querySelector('.area-boas-vindas').style.display = 'none';\n    document.querySelector('.area-pergunta').style.display = 'block';\n    document.getElementById('btn-proxima').style.display = 'block';\n    \n    // Initialize game\n    inicializarJogo();\n}
 
 function embaralharArray(array) {
     const arrayEmbaralhado = [...array];
