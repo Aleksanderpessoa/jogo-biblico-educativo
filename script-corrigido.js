@@ -11,9 +11,6 @@ console.log('=== VERSÃO COM VERSÍCULOS ATIVADA ===');
 
 const CONFIG = {
     OPORTUNIDADES_INICIAIS: 14,
-    NUMERO_PECAS: 10,
-    PUZZLE_COLUNAS: 5,
-    PUZZLE_LINHAS: 2,
     TEMPO_FEEDBACK: 2000,
     ATIVAR_SONS: false,
     ATIVAR_ANIMACOES: true
@@ -453,12 +450,6 @@ const perguntasBiblicas = [
 ];
 
 // ============================================
-// IMAGENS DO QUEBRA-CABEÇA
-// ============================================
-
-const IMAGEM_PADRAO = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cdefs%3E%3ClinearGradient id='sky' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2387CEEB'/%3E%3Cstop offset='100%25' style='stop-color:%23E0F6FF'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='300' fill='url(%23sky)'/%3E%3Ccircle cx='320' cy='60' r='30' fill='%23FFD700'/%3E%3Cpath d='M50 200 Q100 150 150 200 T250 200' stroke='%2332CD32' stroke-width='3' fill='none'/%3E%3Cpath d='M250 200 Q300 150 350 200' stroke='%2332CD32' stroke-width='3' fill='none'/%3E%3Ccircle cx='80' cy='180' r='25' fill='%23228B22'/%3E%3Ccircle cx='150' cy='170' r='30' fill='%23228B22'/%3E%3Ccircle cx='220' cy='175' r='28' fill='%23228B22'/%3E%3Ccircle cx='300' cy='180' r='32' fill='%23228B22'/%3E%3Cpath d='M100 250 Q200 200 300 250' stroke='%238B4513' stroke-width='2' fill='none'/%3E%3Cpath d='M150 260 Q200 230 250 260' stroke='%238B4513' stroke-width='2' fill='none'/%3E%3C/svg%3E";
-
-// ============================================
 // VERSÍCULOS DE BENEVOLÊNCIA (10 versículos)
 // ============================================
 
@@ -513,10 +504,8 @@ let estadoJogo = {
     acertos: 0,
     erros: 0,
     oportunidades: CONFIG.OPORTUNIDADES_INICIAIS,
-    pecasReveladas: 0,
     perguntaAtual: 0,
     perguntasEmbaralhadas: [],
-    imagemAtual: null,
     respondido: false,
     jogoAtivo: true,
     versiculosRevelados: []
@@ -744,7 +733,7 @@ function verificarResposta(respostaSelecionada, respostaCorreta, botao) {
     }
     
     // Verifica se perdeu
-    if (estadoJogo.oportunidades <= 0 && estadoJogo.pecasReveladas < CONFIG.NUMERO_PECAS) {
+    if (estadoJogo.oportunidades <= 0) {
         setTimeout(() => finalizarJogo(false), 2000);
     }
 }
@@ -834,7 +823,7 @@ function atualizarPlacar() {
     if (acertosElement) acertosElement.textContent = estadoJogo.acertos;
     if (errosElement) errosElement.textContent = estadoJogo.erros;
     if (oportunidadesElement) oportunidadesElement.textContent = estadoJogo.oportunidades;
-    if (pecasElement) pecasElement.textContent = `${estadoJogo.pecasReveladas}/${CONFIG.NUMERO_PECAS}`;
+    if (pecasElement) pecasElement.textContent = `${estadoJogo.acertos} respostas`;
 }
 
 // ============================================
@@ -867,7 +856,7 @@ function prepararModalResultado(venceu) {
             modalTitulo.className = 'modal-titulo vitoria';
         }
         if (modalMensagem) {
-            modalMensagem.textContent = 'Você completou o quebra-cabeça!';
+            modalMensagem.textContent = 'Parabéns! Você completou o jogo!';
         }
     } else {
         if (modalTitulo) {
@@ -879,10 +868,9 @@ function prepararModalResultado(venceu) {
         }
     }
     
-    // Configura a imagem completa
+    // Remove imagem do modal (não usamos mais)
     if (modalImagem) {
-        modalImagem.src = estadoJogo.imagemAtual;
-        modalImagem.alt = 'Imagem completa do quebra-cabeça';
+        modalImagem.style.display = 'none';
     }
     
     // Atualiza as estatísticas
@@ -893,7 +881,7 @@ function prepararModalResultado(venceu) {
     
     if (estatisticaAcertos) estatisticaAcertos.textContent = estadoJogo.acertos;
     if (estatisticaErros) estatisticaErros.textContent = estadoJogo.erros;
-    if (estatisticaPecas) estatisticaPecas.textContent = `${estadoJogo.pecasReveladas}/${CONFIG.NUMERO_PECAS}`;
+    if (estatisticaPecas) estatisticaPecas.textContent = `${estadoJogo.acertos} acertos`;
     if (estatisticaOportunidades) estatisticaOportunidades.textContent = CONFIG.OPORTUNIDADES_INICIAIS - estadoJogo.oportunidades;
 }
 
@@ -903,12 +891,11 @@ function jogarNovamente() {
         acertos: 0,
         erros: 0,
         oportunidades: CONFIG.OPORTUNIDADES_INICIAIS,
-        pecasReveladas: 0,
         perguntaAtual: 0,
         perguntasEmbaralhadas: [],
-        imagemAtual: null,
         respondido: false,
-        jogoAtivo: true
+        jogoAtivo: true,
+        versiculosRevelados: []
     };
     
     // Esconde o modal
