@@ -727,6 +727,7 @@ function criarAlternativas(pergunta) {
 }
 
 function verificarResposta(respostaSelecionada, respostaCorreta, botao) {
+    console.log('verificarResposta chamada - Resposta:', respostaSelecionada, 'Correta:', respostaCorreta);
     if (estadoJogo.respondido || !estadoJogo.jogoAtivo) return;
     
     estadoJogo.respondido = true;
