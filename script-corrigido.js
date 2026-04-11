@@ -2,6 +2,8 @@
 // JOGO BÍBLICO EDUCATIVO - VERSÃO CORRIGIDA
 // ============================================
 
+console.log('Script-corrigido.js carregado com sucesso!');
+
 // ============================================
 // CONFIGURAÇÕES DO JOGO
 // ============================================
@@ -529,6 +531,7 @@ let estadoJogo = {
 // ============================================
 
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM carregado, iniciando jogo...');
     inicializarJogo();
 });
 
