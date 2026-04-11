@@ -805,11 +805,19 @@ body {
 }
 
 .titulo-jogo {
-    font-size: 2.5rem;
+    font-size: 1.8rem;
+    color: #8B0000;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    font-weight: bold;
+    font-family: 'Georgia', serif;
+}
+
+.subtitulo-jogo {
+    font-size: 1.5rem;
     color: #4169E1;
     margin-bottom: 20px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 /* Placar */
@@ -875,11 +883,11 @@ body {
 
 /* Puzzle Visual Estático - 10 Slots Fill */
 #puzzle-visual {
-    display: none;
     margin: 20px auto;
     max-width: 400px;
     position: relative;
 }
+
 
 .puzzle-frame {
     width: 100%;
@@ -891,6 +899,22 @@ body {
     overflow: hidden;
     position: relative;
 }
+
+.puzzle-frame.win-glow {
+    animation: puzzleWin 2s ease-in-out infinite;
+    box-shadow: 0 0 50px #FFD700, 0 15px 40px rgba(255, 215, 0, 0.6);
+    border-color: #FFEB3B;
+}
+
+@keyframes puzzleWin {
+    0%, 100% {
+        filter: brightness(1) drop-shadow(0 0 20px #FFD700);
+    }
+    50% {
+        filter: brightness(1.2) drop-shadow(0 0 40px #FFD700);
+    }
+}
+
 
 .puzzle-bg {
     width: 100%;
