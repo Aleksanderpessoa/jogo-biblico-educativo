@@ -542,6 +542,9 @@ function inicializarJogo() {
         IMAGEM_ATUAL = imagemAleatoria;
         estadoJogo.imagemAtual = IMAGEM_ATUAL;
         
+        // Inicializa versículos revelados
+        estadoJogo.versiculosRevelados = [];
+        
         console.log('Imagem selecionada:', IMAGEM_ATUAL);
         
         // Cria o quebra-cabeça
@@ -587,11 +590,13 @@ function criarPuzzle() {
 }
 
 function revelarPeca(indice) {
+    console.log('revelarPeca chamada com indice:', indice);
     const peca = document.getElementById(`peca-${indice}`);
     if (peca && !peca.classList.contains('revelada')) {
         peca.classList.add('revelada');
         estadoJogo.pecasReveladas++;
         
+        console.log('Peça revelada, mostrando versículo...');
         // Mostra versículo de benevolência
         mostrarVersiculoBenevolencia();
         
@@ -603,16 +608,25 @@ function revelarPeca(indice) {
 }
 
 function mostrarVersiculoBenevolencia() {
+    console.log('mostrarVersiculoBenevolencia chamada');
+    console.log('Versículos já revelados:', estadoJogo.versiculosRevelados.length);
+    console.log('Total de versículos disponíveis:', versiculosBenevolencia.length);
+    
     // Verifica se ainda há versículos para mostrar
     if (estadoJogo.versiculosRevelados.length >= versiculosBenevolencia.length) {
+        console.log('Todos os versículos já foram revelados');
         return;
     }
     
     // Encontra o próximo versículo não revelado
     let proximoIndice = estadoJogo.versiculosRevelados.length;
+    console.log('Próximo índice de versículo:', proximoIndice);
+    
     if (proximoIndice < versiculosBenevolencia.length) {
         const versiculo = versiculosBenevolencia[proximoIndice];
         estadoJogo.versiculosRevelados.push(proximoIndice);
+        
+        console.log('Versículo selecionado:', versiculo.referencia);
         
         // Cria modal para mostrar o versículo
         const modalVersiculo = document.createElement('div');
@@ -628,6 +642,7 @@ function mostrarVersiculoBenevolencia() {
         `;
         
         document.body.appendChild(modalVersiculo);
+        console.log('Modal do versículo adicionado ao DOM');
         
         // Adiciona efeito de fade in
         setTimeout(() => {
