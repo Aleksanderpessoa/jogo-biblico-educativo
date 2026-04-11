@@ -17,7 +17,7 @@ const CONFIG = {
 };
 
 // ============================================
-// BANCO DE PERGUNTAS BÍBLICAS (40 perguntas)
+// BANCO DE PERGUNTAS BÍBLICAS (100 perguntas)
 // ============================================
 
 const perguntasBiblicas = [
@@ -249,6 +249,203 @@ const perguntasBiblicas = [
         pergunta: "Quantos pães Jesus multiplicou?",
         alternativas: ["3", "5", "7", "12"],
         correta: "5"
+    },
+    
+    // Histórias de José e seus irmãos
+    {
+        pergunta: "Quantos irmãos José tinha?",
+        alternativas: ["10", "11", "12", "13"],
+        correta: "11"
+    },
+    {
+        pergunta: "O que os irmãos de José fizeram com ele?",
+        alternativas: ["Venderam", "Ajudaram", "Mataram", "Jogaram no poço"],
+        correta: "Jogaram no poço"
+    },
+    {
+        pergunta: "Quem era o faraó do Egito na época de José?",
+        alternativas: ["Faraó Salomão", "Faraó Tutancâmon", "Faraó Ramsés", "Faraó Akhenaton"],
+        correta: "Faraó Ramsés"
+    },
+    
+    // Nascimento e infância de Jesus
+    {
+        pergunta: "Quem visitou Jesus quando ele nasceu?",
+        alternativas: ["Anjos", "Reis Magos", "Pastores", "Sacerdotes"],
+        correta: "Pastores"
+    },
+    {
+        pergunta: "Onde Jesus fugiu quando era bebê?",
+        alternativas: ["Egito", "Fenícia", "Síria", "Deserto"],
+        correta: "Egito"
+    },
+    {
+        pergunta: "Onde Jesus cresceu após voltar do Egito?",
+        alternativas: ["Jerusalém", "Belém", "Nazaré", "Cafarnaum"],
+        correta: "Nazaré"
+    },
+    
+    // Ministério de Jesus
+    {
+        pergunta: "Quantos dias Jesus jejuou no deserto?",
+        alternativas: ["20 dias", "30 dias", "40 dias", "50 dias"],
+        correta: "40 dias"
+    },
+    {
+        pergunta: "Quem Jesus curou na piscina de Betesda?",
+        alternativas: ["Um homem paralítico", "Dez homens", "Uma mulher cega", "Uma criança doente"],
+        correta: "Um homem paralítico"
+    },
+    {
+        pergunta: "Quem Jesus ressuscitou antes de Lázaro?",
+        alternativas: ["Filho do centurião", "Filha de Jairo", "Servo do centurião", "Não ressuscitou ninguém antes"],
+        correta: "Filha de Jairo"
+    },
+    
+    // Ensinos e parábolas de Jesus
+    {
+        pergunta: "Qual parábola Jesus contou sobre o semeador?",
+        alternativas: ["Parábola do trigo e joio", "Parábola da ovelha perdida", "Parábola do tesouro escondido", "Parábola da rede"],
+        correta: "Parábola do semeador"
+    },
+    {
+        pergunta: "Quem são os bem-aventurados na montanha?",
+        alternativas: ["Os pobres de espírito", "Os que choram", "Os mansos", "Os que têm fome e sede"],
+        correta: "Os pobres de espírito"
+    },
+    {
+        pergunta: "Qual é o maior mandamento?",
+        alternativas: ["Não matar", "Honrar pai e mãe", "Amar a Deus", "Não roubar"],
+        correta: "Amar a Deus"
+    },
+    
+    // Milagres de Jesus
+    {
+        pergunta: "Quem Jesus curou de lepra?",
+        alternativas: ["Um homem", "Dez homens", "Um grupo de leprosos", "Uma mulher"],
+        correta: "Um homem"
+    },
+    {
+        pergunta: "Jesus andou sobre quais águas?",
+        alternativas: ["Mar Vermelho", "Mar Morto", "Rio Jordão", "Lago da Galileia"],
+        correta: "Mar da Galileia"
+    },
+    {
+        pergunta: "Quem pediu para sentar ao lado de Jesus?",
+        alternativas: ["Pedro", "João", "Tiago", "André"],
+        correta: "Tiago"
+    },
+    
+    // Paixão e crucificação
+    {
+        pergunta: "Quem negou Jesus três vezes?",
+        alternativas: ["Pedro", "João", "Tiago", "Judas"],
+        correta: "Pedro"
+    },
+    {
+        pergunta: "Quem traiu Jesus?",
+        alternativas: ["Pedro", "João", "Judas Iscariotes", "Tomé"],
+        correta: "Judas Iscariotes"
+    },
+    {
+        pergunta: "Quem ajudou Jesus a carregar a cruz?",
+        alternativas: ["Simão Cirineu", "Nicodemos", "José de Arimateia", "Bartolomeu"],
+        correta: "Simão Cirineu"
+    },
+    {
+        pergunta: "O que aconteceu quando Jesus morreu?",
+        alternativas: ["Trevas por 3 horas", "Terremoto", "Estrela cadente", "Sol se escureceu"],
+        correta: "Trevas por 3 horas"
+    },
+    
+    // Ressurreição e ascensão
+    {
+        pergunta: "Quem foi o primeiro a ver o túmulo vazio?",
+        alternativas: ["Maria Madalena", "Pedro", "João", "Maria mãe de Jesus"],
+        correta: "Maria Madalena"
+    },
+    {
+        pergunta: "Quantos dias Jesus apareceu após a ressurreição?",
+        alternativas: ["7 dias", "12 dias", "40 dias", "50 dias"],
+        correta: "40 dias"
+    },
+    {
+        pergunta: "Onde Jesus ascendeu ao céu?",
+        alternativas: ["Monte das Oliveiras", "Monte Sião", "Monte Tabor", "Monte Carmelo"],
+        correta: "Monte das Oliveiras"
+    },
+    
+    // Espírito Santo e Igreja
+    {
+        pergunta: "O que desceu sobre os discípulos no Pentecostes?",
+        alternativas: ["Fogo", "Pombo", "Anjos", "Vento forte"],
+        correta: "Fogo"
+    },
+    {
+        pergunta: "Quem foi o primeiro mártir cristão?",
+        alternativas: ["Pedro", "Paulo", "Estêvão", "Tiago"],
+        correta: "Estêvão"
+    },
+    {
+        pergunta: "Quem perseguiu os cristãos primitivos?",
+        alternativas: ["Herodes", "Pilatos", "Nero", "Calígula"],
+        correta: "Nero"
+    },
+    
+    // Vida de Paulo
+    {
+        pergunta: "Qual era o nome de Paulo antes de se converter?",
+        alternativas: ["Saulo", "Barnabé", "Silas", "Timóteo"],
+        correta: "Saulo"
+    },
+    {
+        pergunta: "Onde Paulo teve a visão de Jesus?",
+        alternativas: ["Damasco", "Jerusalém", "Antioquia", "Éfeso"],
+        correta: "Damasco"
+    },
+    {
+        pergunta: "Com quem Paulo viajou em suas missões?",
+        alternativas: ["Barnabé", "Silas", "Timóteo", "Tito"],
+        correta: "Barnabé"
+    },
+    
+    // Cartas e profecias
+    {
+        pergunta: "Qual livro da Bíblia fala sobre o fim dos tempos?",
+        alternativas: ["Daniel", "Ezequiel", "Apocalipse", "Isaías"],
+        correta: "Apocalipse"
+    },
+    {
+        pergunta: "Quantas cartas Paulo escreveu?",
+        alternativas: ["7", "13", "21", "27"],
+        correta: "13"
+    },
+    {
+        pergunta: "Qual fruto do Espírito Santo?",
+        alternativas: ["Amor", "Alegria", "Paz", "Paciência"],
+        correta: "Amor"
+    },
+    
+    // Personagens adicionais
+    {
+        pergunta: "Quem foi o primeiro homem a morrer por Deus?",
+        alternativas: ["Abel", "Caim", "Sete", "Enoque"],
+        correta: "Abel"
+    },
+    {
+        pergunta: "Quem viveu 969 anos?",
+        alternativas: ["Adão", "Noé", "Matusalém", "Abraão"],
+        correta: "Matusalém"
+    },
+    {
+        pergunta: "Quem foi engolido vivo por Deus?",
+        alternativas: ["Elias", "Enoque", "Enoque", "Ló"],
+        correta: "Elias"
+    },
+    {
+        pergunta: "Quem escreveu a maioria dos Salmos?",
+        alternativas: ["Moisés", "Davi", "Salomão", "Asafe"],
+        correta: "Davi"
     }
 ];
 
