@@ -461,6 +461,53 @@ const IMAGENS_ANIMAIS = [
 let IMAGEM_ATUAL = '';
 
 // ============================================
+// VERSÍCULOS DE BENEVOLÊNCIA (10 versículos)
+// ============================================
+
+const versiculosBenevolencia = [
+    {
+        versiculo: "Porque Deus amou o mundo de tal maneira, que deu seu Filho unigênito, para que todo aquele que nele crê não pereça, mas tenha a vida eterna.",
+        referencia: "João 3:16"
+    },
+    {
+        versiculo: "O Senhor é o meu pastor; nada me faltará.",
+        referencia: "Salmos 23:1"
+    },
+    {
+        versiculo: "Não temas, porque eu sou contigo; não te assombres, porque eu sou teu Deus; eu te fortaleço, e te ajudo, e te sustento com a minha destra fiel.",
+        referencia: "Isaías 41:10"
+    },
+    {
+        versiculo: "Tudo posso naquele que me fortalece.",
+        referencia: "Filipenses 4:13"
+    },
+    {
+        versiculo: "O Senhor é a minha luz e a minha salvação; a quem temerei? O Senhor é a força da minha vida; de quem me recearei?",
+        referencia: "Salmos 27:1"
+    },
+    {
+        versiculo: "Porque eu bem sei os pensamentos que penso de vós, diz o Senhor; pensamentos de paz, e não de mal, para vos dar o fim que esperais.",
+        referencia: "Jeremias 29:11"
+    },
+    {
+        versiculo: "Confia no Senhor de todo o teu coração, e não te estribes no teu próprio entendimento.",
+        referencia: "Provérbios 3:5"
+    },
+    {
+        versiculo: "O Senhor é bom, uma fortaleza no dia da angústia, e conhece os que confiam nele.",
+        referencia: "Naum 1:7"
+    },
+    {
+        versiculo: "Aquele que habita no esconderijo do Altíssimo, à sombra do Onipotente descansará.",
+        referencia: "Salmos 91:1"
+    },
+    {
+        versiculo: "E sabemos que todas as coisas contribuem juntamente para o bem daqueles que amam a Deus, daqueles que são chamados segundo o seu propósito.",
+        referencia: "Romanos 8:28"
+    }
+];
+
+// ============================================
 // VARIÁVEIS GLOBAIS DO JOGO
 // ============================================
 
@@ -473,7 +520,8 @@ let estadoJogo = {
     perguntasEmbaralhadas: [],
     imagemAtual: null,
     respondido: false,
-    jogoAtivo: true
+    jogoAtivo: true,
+    versiculosRevelados: []
 };
 
 // ============================================
@@ -544,10 +592,64 @@ function revelarPeca(indice) {
         peca.classList.add('revelada');
         estadoJogo.pecasReveladas++;
         
+        // Mostra versículo de benevolência
+        mostrarVersiculoBenevolencia();
+        
         // Verifica se ganhou
         if (estadoJogo.pecasReveladas === CONFIG.NUMERO_PECAS) {
             setTimeout(() => finalizarJogo(true), 1000);
         }
+    }
+}
+
+function mostrarVersiculoBenevolencia() {
+    // Verifica se ainda há versículos para mostrar
+    if (estadoJogo.versiculosRevelados.length >= versiculosBenevolencia.length) {
+        return;
+    }
+    
+    // Encontra o próximo versículo não revelado
+    let proximoIndice = estadoJogo.versiculosRevelados.length;
+    if (proximoIndice < versiculosBenevolencia.length) {
+        const versiculo = versiculosBenevolencia[proximoIndice];
+        estadoJogo.versiculosRevelados.push(proximoIndice);
+        
+        // Cria modal para mostrar o versículo
+        const modalVersiculo = document.createElement('div');
+        modalVersiculo.className = 'modal-versiculo';
+        modalVersiculo.innerHTML = `
+            <div class="modal-versiculo-content">
+                <div class="versiculo-texto">
+                    <p class="versiculo-principal">"${versiculo.versiculo}"</p>
+                    <p class="versiculo-referencia">${versiculo.referencia}</p>
+                </div>
+                <button class="versiculo-fechar" onclick="fecharVersiculo()">Continuar</button>
+            </div>
+        `;
+        
+        document.body.appendChild(modalVersiculo);
+        
+        // Adiciona efeito de fade in
+        setTimeout(() => {
+            modalVersiculo.style.opacity = '1';
+        }, 10);
+        
+        // Auto-close após 5 segundos
+        setTimeout(() => {
+            fecharVersiculo();
+        }, 5000);
+    }
+}
+
+function fecharVersiculo() {
+    const modal = document.querySelector('.modal-versiculo');
+    if (modal) {
+        modal.style.opacity = '0';
+        setTimeout(() => {
+            if (modal.parentNode) {
+                modal.parentNode.removeChild(modal);
+            }
+        }, 300);
     }
 }
 

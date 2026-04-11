@@ -2,6 +2,92 @@
    ESTILOS GLOBAIS E CONFIGURAÇÕES BASE
    ============================================ */
 
+/* ============================================
+   MODAL DE VERSÍCULOS BÍBLICOS
+   ============================================ */
+
+.modal-versiculo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.modal-versiculo-content {
+    background: linear-gradient(135deg, #fff8dc 0%, #fffacd 100%);
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 90%;
+    max-height: 80%;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border: 3px solid #ffd700;
+    position: relative;
+    animation: brilharSuave 2s infinite;
+}
+
+.versiculo-texto {
+    margin-bottom: 20px;
+}
+
+.versiculo-principal {
+    font-family: 'Georgia', serif;
+    font-size: 1.4rem;
+    color: #2c3e50;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    font-weight: 500;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.versiculo-referencia {
+    font-family: 'Arial', sans-serif;
+    font-size: 1.1rem;
+    color: #e74c3c;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.versiculo-fechar {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+    font-weight: bold;
+}
+
+.versiculo-fechar:hover {
+    background: linear-gradient(135deg, #2980b9, #3498db);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+}
+
+.versiculo-fechar:active {
+    transform: translateY(0);
+}
+
+@keyframes brilharSuave {
+    0%, 100% {
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 215, 0, 0.3);
+    }
+    50% {
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 30px rgba(255, 215, 0, 0.5);
+    }
+}
+
 * {
     margin: 0;
     padding: 0;
