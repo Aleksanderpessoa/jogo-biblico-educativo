@@ -89,42 +89,129 @@
 }
 
 /* ============================================
-   ÁREA DE MENSAGENS
+   ÁREA DE BOAS-VINDAS
    ============================================ */
 
-.area-mensagens {
+.area-boas-vindas {
+    margin-bottom: 30px;
+}
+
+.welcome-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 15px 35px rgba(102, 126, 234, 0.3);
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    animation: welcomeBrilho 3s ease-in-out infinite;
+}
+
+.welcome-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    animation: welcomeBrilhoMove 4s linear infinite;
+}
+
+.welcome-titulo {
+    color: white;
+    font-size: 2.5rem;
+    margin: 0 0 25px 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    font-weight: bold;
+    position: relative;
+    z-index: 1;
+}
+
+.welcome-conteudo {
+    position: relative;
+    z-index: 1;
+}
+
+.welcome-texto {
+    color: white;
+    font-size: 1.3rem;
+    margin: 0 0 20px 0;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    line-height: 1.6;
+}
+
+.welcome-icones {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 25px 0;
+}
+
+.icone {
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    color: white;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.icone:hover {
+    transform: scale(1.1) rotate(10deg);
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.welcome-instrucao {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.1rem;
+    margin: 20px 0 0 0;
+    font-style: italic;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes welcomeBrilho {
+    0%, 100% {
+        box-shadow: 0 15px 35px rgba(102, 126, 234, 0.3);
+    }
+    50% {
+        box-shadow: 0 15px 45px rgba(102, 126, 234, 0.5);
+    }
+}
+
+@keyframes welcomeBrilhoMove {
+    0% {
+        transform: translateX(-100%) translateY(-100%) rotate(45deg);
+    }
+    100% {
+        transform: translateX(100%) translateY(100%) rotate(45deg);
+    }
+}
+
+/* ============================================
+   ÁREA DE MENSAGENS (para feedback de respostas)
+   ============================================ */
+
+.area-feedback {
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
     border-radius: 20px;
     padding: 30px;
     margin-bottom: 30px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
     border: 2px solid #dee2e6;
-    min-height: 200px;
+    min-height: 150px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-}
-
-.titulo-mensagens {
-    color: #495057;
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-.mensagem-container {
-    width: 100%;
-    max-width: 600px;
-    transition: all 0.3s ease-in-out;
-}
-
-.mensagem-inicial {
-    color: #6c757d;
-    font-size: 1.1rem;
-    font-style: italic;
-    opacity: 0.8;
 }
 
 .mensagem-sucesso {
@@ -135,6 +222,8 @@
     box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
     border: 2px solid #2E7D32;
     animation: sucessoPulso 0.6s ease-in-out infinite alternate;
+    max-width: 600px;
+    width: 100%;
 }
 
 .mensagem-sucesso h2 {
@@ -176,6 +265,8 @@
     border-radius: 15px;
     box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
     border: 2px solid #D32F2F;
+    max-width: 600px;
+    width: 100%;
 }
 
 .mensagem-erro h2 {

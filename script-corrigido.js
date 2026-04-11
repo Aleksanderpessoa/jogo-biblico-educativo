@@ -547,11 +547,11 @@ function inicializarJogo() {
 // ============================================
 
 function mostrarMensagem(tipo, versiculo = null) {
-    const mensagemContainer = document.getElementById('mensagem-container');
-    if (!mensagemContainer) return;
+    const feedbackArea = document.getElementById('feedback-mensagem');
+    if (!feedbackArea) return;
     
     if (tipo === 'acerto') {
-        mensagemContainer.innerHTML = `
+        feedbackArea.innerHTML = `
             <div class="mensagem-sucesso">
                 <h2>Ótimo! Você Acertou!</h2>
                 <p class="parabens">Parabéns!!!</p>
@@ -571,7 +571,7 @@ function mostrarMensagem(tipo, versiculo = null) {
         ];
         const dicaAleatoria = dicas[Math.floor(Math.random() * dicas.length)];
         
-        mensagemContainer.innerHTML = `
+        feedbackArea.innerHTML = `
             <div class="mensagem-erro">
                 <h2>Que pena! Você errou...</h2>
                 <p class="dica">${dicaAleatoria}</p>
@@ -581,11 +581,11 @@ function mostrarMensagem(tipo, versiculo = null) {
     }
     
     // Adiciona animação de entrada
-    mensagemContainer.style.opacity = '0';
-    mensagemContainer.style.transform = 'scale(0.8)';
+    feedbackArea.style.opacity = '0';
+    feedbackArea.style.transform = 'scale(0.8)';
     setTimeout(() => {
-        mensagemContainer.style.opacity = '1';
-        mensagemContainer.style.transform = 'scale(1)';
+        feedbackArea.style.opacity = '1';
+        feedbackArea.style.transform = 'scale(1)';
     }, 10);
 }
 
