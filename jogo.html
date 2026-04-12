@@ -11,8 +11,8 @@
     <div class="container-jogo">
         <!-- Cabeçalho do jogo -->
         <header class="header-jogo">
-<h1 class="titulo-jogo">Igreja Madureira Crianças e Adolescentes - Ecoporanga-ES</h1>
-<h2 class="subtitulo-jogo">Quiz Bíblico Educativo</h2>
+<h1 class="titulo-jogo" style="font-size: 3rem !important; color: #8B0000 !important; text-shadow: 3px 3px 6px rgba(0,0,0,0.3), 0 0 20px rgba(139,0,0,0.5) !important;">Igreja Madureira Crianças e Adolescentes - Ecoporanga-ES</h1>
+<h2 class="subtitulo-jogo" style="font-size: 2.2rem !important; color: #4169E1 !important; text-shadow: 2px 2px 4px rgba(0,0,0,0.2), 0 0 15px rgba(65,105,225,0.5) !important;">Quiz Bíblico Educativo</h2>
             
             <!-- Placar - Quiz Only -->
             <div class="placar">
@@ -133,6 +133,13 @@
         </div>
     </div>
 
+    <!-- Título visível - Debug -->
+    <script>
+        console.log('jogo.html carregado - Título deve aparecer!');
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Título jogo.html:', document.querySelector('.titulo-jogo')?.textContent);
+        });
+    </script>
     <!-- Script principal - Quiz Only -->
     <script src="script-corrigido.js"></script>
 </body>

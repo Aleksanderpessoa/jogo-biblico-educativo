@@ -1,21 +1,24 @@
-# TODO: Concluir Jogo Bíblico Quiz (Plano Aprovado - EXECUTANDO)
+# TODO.md - Plano de Correção de Títulos Aprovado ✅
 
-## Progresso Atual: 100% - All steps complete! ✅✅✅✅✅
+## Progresso Atual: 0/6 passos completos
 
-### Passos do Plano (Breakdown):
+### Plano de Correção de Títulos (Breakdown):
 
-✅ **All Steps Complete!**
+**Objetivo**: Garantir que títulos apareçam claramente em index.html e jogo.html.
 
-**Final Features:**
-- 100+ Bible questions
-- 14 chances, win at 10 acertos (fills 10 puzzle slots)
-- Bible verses on correct
-- Visual bible scene puzzle with win glow
-- Responsive, replayable
-- index.html landing → jogo.html quiz
+**Passos**:
 
-**Tested:** Full flow works! Puzzle fills progressively, glows on win.
+- [x] **1. Editar style.css**: Aumentar visibilidade dos títulos (.titulo-jogo, .titulo-principal)
+- [x] **2. Editar jogo.html**: Adicionar estilos inline de fallback no h1 + log de console
+- [x] **3. Editar index.html**: Adicionar estilos inline de fallback no h1
+- [ ] **4. Testar index.html** (abrir no browser → verificar títulos)
+- [ ] **5. Testar jogo.html** (clicar botão → verificar títulos na página do jogo)
+- [ ] **6. Atualizar TODO.md** com ✅ e comando para demo
 
-Ready for deploy/GitHub Pages.
+**Próximos passos após edição**: 
+- Abrir `index.html` no browser (Ctrl+F5 para hard refresh)
+- Clicar \"Vamos lá!\" → verificar títulos em jogo.html
+- Verificar console F12 (sem erros)
 
+**Status**: Aguardando edições...
 
