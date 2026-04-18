@@ -189,11 +189,17 @@ function verificarResposta(respostaSelecionada, respostaCorreta, botao) {
         estadoJogo.acertos++;
         botao.classList.add('correta');
         mostrarMensagem('acerto', null);
-        atualizarTextoMotivacional(true);
-        mostrarVersiculoBenevolencia();
         
-        // NEW: Fill puzzle slot
-        fillSlot(estadoJogo.acertos);
+        // Verifica se atingiu 12 acertos para evolução
+        if (estadoJogo.acertos >= 12) {
+            mostrarModalEvolucao();
+            setTimeout(() => {
+                window.location.href = 'jogo-avancado.html';
+            }, 3000);
+        }
+        
+        // Atualiza texto motivacional
+        atualizarTextoMotivacional(true);
         
         // Check win condition (10 acertos)
         if (estadoJogo.acertos >= 10) {
@@ -384,6 +390,62 @@ function iniciarQuiz() {
     document.getElementById('btn-proxima').style.display = 'block';
     
     inicializarJogo();
+}
+
+function mostrarModalEvolucao() {
+    // Criar modal de evolução
+    const modal = document.createElement('div');
+    modal.className = 'modal-evolucao';
+    modal.innerHTML = `
+        <div class="modal-evolucao-conteudo">
+            <div class="evolucao-icones">
+                <div class="icone-evolucao">1</div>
+                <div class="seta-evolucao">2</div>
+                <div class="icone-evolucao">3</div>
+            </div>
+            <h2 class="evolucao-titulo">Parabéns! Você evoluiu!</h2>
+            <p class="evolucao-mensagem">Agora responda perguntas sobre livros da Bíblia</p>
+            <div class="evolucao-contador">
+                <div class="contador-circulo">
+                    <span class="contador-numero">3</span>
+                </div>
+                <p class="contador-texto">Redirecionando em...</p>
+            </div>
+            <div class="evolucao-progresso">
+                <div class="progresso-barra">
+                    <div class="progresso-preenchimento"></div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Animação de entrada
+    setTimeout(() => {
+        modal.classList.add('visivel');
+    }, 100);
+    
+    // Contador regressivo
+    let contador = 3;
+    const contadorElement = modal.querySelector('.contador-numero');
+    const progressoElement = modal.querySelector('.progresso-preenchimento');
+    
+    const intervalo = setInterval(() => {
+        contador--;
+        contadorElement.textContent = contador;
+        progressoElement.style.width = `${(3 - contador) * 33.33}%`;
+        
+        if (contador <= 0) {
+            clearInterval(intervalo);
+            modal.classList.remove('visivel');
+            setTimeout(() => {
+                if (modal.parentNode) {
+                    modal.parentNode.removeChild(modal);
+                }
+            }, 500);
+        }
+    }, 1000);
 }
 
 function embaralharArray(array) {
